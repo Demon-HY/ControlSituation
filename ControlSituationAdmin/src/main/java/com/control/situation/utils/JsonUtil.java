@@ -92,29 +92,22 @@ public class JsonUtil {
         return objectMapper.readValue(json, Map.class);
     }
 
-    public static void sendJsonResponse(HttpServletResponse response, Object obj)
-            throws Exception {
-        sendJsonResponse(response, obj, "");
-    }
-
-    public static void sendJsonResponse(HttpServletResponse response, Object obj, String callback)
-            throws Exception {
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json; charset=utf-8");
-        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
-        response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
-        // 声明接受所有域的请求
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        PrintWriter out = response.getWriter();
-
-        if(StringUtils.isNotBlank(callback)){
-            writeJavascript(response, callback, convertToJSON(obj));
-        }else{
-            response.getWriter().print(convertToJSON(obj));
-        }
-        out.flush();
-    }
+    public static void sendJsonResponse(HttpServletResponse response, Object obj) {
+         try {
+             response.setCharacterEncoding("UTF-8");
+             response.setContentType("application/json; charset=utf-8");
+             response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+             response.setHeader("Access-Control-Max-Age", "3600");
+             response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
+             // 声明接受所有域的请求
+             response.setHeader("Access-Control-Allow-Origin", "*");
+             PrintWriter out = response.getWriter();
+             response.getWriter().print(convertToJSON(obj));
+             out.flush();
+         } catch (Exception e) {
+             e.printStackTrace();
+         }
+     }
 
     /**
      *

@@ -12,15 +12,15 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 -- 部门
 -- ----------------------------
-DROP TABLE IF EXISTS `sys_dept`;
-CREATE TABLE `sys_dept` (
-  `id` int(4) NOT NULL AUTO_INCREMENT COMMENT '部门ID',
-  `sort` int(4) NOT NULL COMMENT '排序',
-  `pid` int(4) NOT NULL COMMENT '父部门id',
-  `pids` varchar(128) NOT NULL COMMENT '父级ID集合，0,10,101',
-  `dept_name` varchar(128) NOT NULL COMMENT '部门名称',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='部门表';
+# DROP TABLE IF EXISTS `sys_dept`;
+# CREATE TABLE `sys_dept` (
+#   `id` int(4) NOT NULL AUTO_INCREMENT COMMENT '部门ID',
+#   `sort` int(4) NOT NULL COMMENT '排序',
+#   `pid` int(4) NOT NULL COMMENT '父部门id',
+#   `pids` varchar(128) NOT NULL COMMENT '父级ID集合，0,10,101',
+#   `dept_name` varchar(128) NOT NULL COMMENT '部门名称',
+#   PRIMARY KEY (`id`)
+# ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='部门表';
 
 -- ----------------------------
 -- 登录记录
@@ -121,6 +121,8 @@ CREATE TABLE `sys_user` (
   `update_time` datetime NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='管理员表';
+
+-- 这里缺一个角色表
 
 -- 提交事务
 commit;
