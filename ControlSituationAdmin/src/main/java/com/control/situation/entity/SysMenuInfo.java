@@ -1,6 +1,10 @@
 package com.control.situation.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * SysMenu 实体类
@@ -8,168 +12,170 @@ import java.io.Serializable;
  * @author Demon-Coffee
  * @since 1.0
  */
-public class SysMenuInfo  implements Serializable {
+public class SysMenuInfo implements Serializable {
 
-    private static final long serialVersionUID = -1L;
+	private static final long serialVersionUID = -1L;
 
-        // 菜单ID
-        private Integer id;
+	// 菜单ID
+	private Integer id;
 
-        // 菜单父编号
-        private Integer pid;
+	// 菜单父编号
+	private Integer pid;
 
-        // 当前菜单的所有父菜单编号
-        private String pids;
+	// 当前菜单的所有父菜单编号
+	private String pids;
 
-        // 菜单名称
-        private String name;
+	// 菜单名称
+	private String name;
 
-        // 菜单图标
-        private String icon;
+	// 菜单图标
+	private String icon;
 
-        // url地址
-        private String url;
+	// url地址
+	private String url;
 
-        // 菜单排序号
-        private Integer sort;
+	// 菜单排序号
+	private Integer sort;
 
-        // 菜单层级
-        private Boolean level;
+	// 菜单层级
+	private Boolean level;
 
-        // 是否是菜单（1：是  0：不是）
-        private Boolean menu;
+	// 是否是菜单（1：是  0：不是）
+	private Boolean menu;
 
-        // 菜单状态 :  1:启用   0:不启用
-        private Boolean enable;
+	// 菜单状态 :  1:启用   0:不启用
+	private Boolean enable;
 
-        // 是否打开:    1:打开   0:不打开
-        private Boolean open;
+	// 是否打开:    1:打开   0:不打开
+	private Boolean open;
 
-        // 创建时间
-            @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date createTime;
+	// 创建时间
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date createTime;
 
-        // 更新时间
-            @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date updateTime;
+	// 更新时间
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date updateTime;
 
-        // 备注
-        private String remark;
+	// 备注
+	private String remark;
 
-    public SysMenuInfo(){}
 
-    public Integer getId() {
-        return id;
-    }
+	public SysMenuInfo() {
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public Integer getPid() {
-        return pid;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public void setPid(Integer pid) {
-        this.pid = pid;
-    }
+	public Integer getPid() {
+		return pid;
+	}
 
-    public String getPids() {
-        return pids;
-    }
+	public void setPid(Integer pid) {
+		this.pid = pid;
+	}
 
-    public void setPids(String pids) {
-        this.pids = pids;
-    }
+	public String getPids() {
+		return pids;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setPids(String pids) {
+		this.pids = pids;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getIcon() {
-        return icon;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
+	public String getIcon() {
+		return icon;
+	}
 
-    public String getUrl() {
-        return url;
-    }
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+	public String getUrl() {
+		return url;
+	}
 
-    public Integer getSort() {
-        return sort;
-    }
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
-    public void setSort(Integer sort) {
-        this.sort = sort;
-    }
+	public Integer getSort() {
+		return sort;
+	}
 
-    public Boolean getLevel() {
-        return level;
-    }
+	public void setSort(Integer sort) {
+		this.sort = sort;
+	}
 
-    public void setLevel(Boolean level) {
-        this.level = level;
-    }
+	public Boolean getLevel() {
+		return level;
+	}
 
-    public Boolean getMenu() {
-        return menu;
-    }
+	public void setLevel(Boolean level) {
+		this.level = level;
+	}
 
-    public void setMenu(Boolean menu) {
-        this.menu = menu;
-    }
+	public Boolean getMenu() {
+		return menu;
+	}
 
-    public Boolean getEnable() {
-        return enable;
-    }
+	public void setMenu(Boolean menu) {
+		this.menu = menu;
+	}
 
-    public void setEnable(Boolean enable) {
-        this.enable = enable;
-    }
+	public Boolean getEnable() {
+		return enable;
+	}
 
-    public Boolean getOpen() {
-        return open;
-    }
+	public void setEnable(Boolean enable) {
+		this.enable = enable;
+	}
 
-    public void setOpen(Boolean open) {
-        this.open = open;
-    }
+	public Boolean getOpen() {
+		return open;
+	}
 
-    public Date getCreateTime() {
-        return createTime;
-    }
+	public void setOpen(Boolean open) {
+		this.open = open;
+	}
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+	public Date getCreateTime() {
+		return createTime;
+	}
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
+	public Date getUpdateTime() {
+		return updateTime;
+	}
 
-    public String getRemark() {
-        return remark;
-    }
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
 
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
 
 }

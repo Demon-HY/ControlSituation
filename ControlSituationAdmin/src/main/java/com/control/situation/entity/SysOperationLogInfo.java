@@ -1,6 +1,10 @@
 package com.control.situation.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * SysOperationLog 实体类
@@ -8,111 +12,113 @@ import java.io.Serializable;
  * @author Demon-Coffee
  * @since 1.0
  */
-public class SysOperationLogInfo  implements Serializable {
+public class SysOperationLogInfo implements Serializable {
 
-    private static final long serialVersionUID = -1L;
+	private static final long serialVersionUID = -1L;
 
-        // 主键
-        private Integer id;
+	// 主键
+	private Integer id;
 
-        // 日志类型
-        private String logType;
+	// 日志类型
+	private String logType;
 
-        // 日志名称
-        private String logName;
+	// 日志名称
+	private String logName;
 
-        // 用户id
-        private Integer userId;
+	// 用户id
+	private Integer userId;
 
-        // 模块名称
-        private String moduleName;
+	// 模块名称
+	private String moduleName;
 
-        // 操作数据
-        private String operationData;
+	// 操作数据
+	private String operationData;
 
-        // 创建时间
-            @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date createtime;
+	// 创建时间
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date createtime;
 
-        // 是否成功
-        private String succeed;
+	// 是否成功
+	private String succeed;
 
-        // 备注
-        private String remark;
+	// 备注
+	private String remark;
 
-    public SysOperationLogInfo(){}
 
-    public Integer getId() {
-        return id;
-    }
+	public SysOperationLogInfo() {
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public String getLogType() {
-        return logType;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public void setLogType(String logType) {
-        this.logType = logType;
-    }
+	public String getLogType() {
+		return logType;
+	}
 
-    public String getLogName() {
-        return logName;
-    }
+	public void setLogType(String logType) {
+		this.logType = logType;
+	}
 
-    public void setLogName(String logName) {
-        this.logName = logName;
-    }
+	public String getLogName() {
+		return logName;
+	}
 
-    public Integer getUserId() {
-        return userId;
-    }
+	public void setLogName(String logName) {
+		this.logName = logName;
+	}
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
+	public Integer getUserId() {
+		return userId;
+	}
 
-    public String getModuleName() {
-        return moduleName;
-    }
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 
-    public void setModuleName(String moduleName) {
-        this.moduleName = moduleName;
-    }
+	public String getModuleName() {
+		return moduleName;
+	}
 
-    public String getOperationData() {
-        return operationData;
-    }
+	public void setModuleName(String moduleName) {
+		this.moduleName = moduleName;
+	}
 
-    public void setOperationData(String operationData) {
-        this.operationData = operationData;
-    }
+	public String getOperationData() {
+		return operationData;
+	}
 
-    public Date getCreatetime() {
-        return createtime;
-    }
+	public void setOperationData(String operationData) {
+		this.operationData = operationData;
+	}
 
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
-    }
+	public Date getCreatetime() {
+		return createtime;
+	}
 
-    public String getSucceed() {
-        return succeed;
-    }
+	public void setCreatetime(Date createtime) {
+		this.createtime = createtime;
+	}
 
-    public void setSucceed(String succeed) {
-        this.succeed = succeed;
-    }
+	public String getSucceed() {
+		return succeed;
+	}
 
-    public String getRemark() {
-        return remark;
-    }
+	public void setSucceed(String succeed) {
+		this.succeed = succeed;
+	}
 
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
 
 }

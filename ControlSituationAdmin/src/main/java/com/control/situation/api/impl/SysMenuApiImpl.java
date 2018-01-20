@@ -1,8 +1,8 @@
 package com.control.situation.api.impl;
 
-import com.control.situation.api.sysMenuApi;
+import com.control.situation.api.SysMenuApi;
 import com.control.situation.config.Env;
-import com.control.situation.dao.sysMenuDao;
+import com.control.situation.dao.SysMenuDao;
 import com.control.situation.utils.ClientResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

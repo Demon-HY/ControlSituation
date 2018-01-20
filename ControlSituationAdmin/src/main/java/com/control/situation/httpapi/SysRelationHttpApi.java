@@ -1,6 +1,8 @@
 package com.control.situation.httpapi;
 
 import org.apache.log4j.Logger;
+
+import com.control.situation.utils.ClientResult;
 import com.control.situation.api.SysRelationApi;
 import com.control.situation.config.Env;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,35 +28,35 @@ public class SysRelationHttpApi {
 	@RequestMapping("findList")
 	public ClientResult findList(HttpServletRequest req) {
 		Env env = (Env) req.getAttribute("env");
-		ClientResult clientResult = sysRelationApi.findList(Env env);
-		return env.getClientResult();
+		ClientResult clientResult = sysRelationApi.findList(env);
+		return clientResult;
 	}
 
 	@RequestMapping("findDetail")
 	public ClientResult findDetail(HttpServletRequest req){
 		Env env = (Env) req.getAttribute("env");
-		ClientResult clientResult = sysRelationApi.findDetail(Env env);
-		return env.getClientResult();
+		ClientResult clientResult = sysRelationApi.findDetail(env);
+		return clientResult;
 	}
 
 	@RequestMapping("save")
 	public ClientResult save(HttpServletRequest req){
 		Env env = (Env) req.getAttribute("env");
-		ClientResult clientResult = sysRelationApi.save(Env env);
-		return env.getClientResult();
+		ClientResult clientResult = sysRelationApi.save(env);
+		return clientResult;
 	}
 
 	@RequestMapping("delete")
 	public ClientResult delete(HttpServletRequest req){
 		Env env = (Env) req.getAttribute("env");
-		ClientResult clientResult = sysRelationApi.delete(Env env);
-		return env.getClientResult();
+		ClientResult clientResult = sysRelationApi.delete(env);
+		return clientResult;
 	}
 
 	@RequestMapping("update")
 	public ClientResult update(HttpServletRequest req){
 		Env env = (Env) req.getAttribute("env");
-		ClientResult clientResult = sysRelationApi.update(Env env);
-		return env.getClientResult();
+		ClientResult clientResult = sysRelationApi.update(env);
+		return clientResult;
 	}
 }

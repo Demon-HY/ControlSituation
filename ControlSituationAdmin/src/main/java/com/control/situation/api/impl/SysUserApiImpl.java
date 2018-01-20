@@ -1,8 +1,8 @@
 package com.control.situation.api.impl;
 
-import com.control.situation.api.sysUserApi;
+import com.control.situation.api.SysUserApi;
 import com.control.situation.config.Env;
-import com.control.situation.dao.sysUserDao;
+import com.control.situation.dao.SysUserDao;
 import com.control.situation.utils.ClientResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

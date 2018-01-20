@@ -6,10 +6,7 @@ import com.demon.utils.RandomUtil;
 import com.demon.utils.ValidateUtils;
 import org.apache.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -65,7 +62,7 @@ public class WebLoggerAspect {
 			String paraName = enu.nextElement();
 			obj.put(paraName, request.getParameter(paraName));
 		}
-		logger.info(String.format("%s    REQ    %s    %s    %s", requestCode.get(), url, httpMethod, obj.toString()));
+		logger.info(String.format("%s    REQ    OK    %s    %s    %s", requestCode.get(), url, httpMethod, obj.toString()));
 
 //		logger.info("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
 	}
@@ -91,7 +88,19 @@ public class WebLoggerAspect {
 
 
 		// 处理完请求，返回内容
-		logger.info(String.format("%s    RESP    %s    %s    %s", requestCode.get(), url, httpMethod, resultObj));
+		logger.info(String.format("%s    RESP    OK    %s    %s    %s", requestCode.get(), url, httpMethod, resultObj));
+	}
+
+	@AfterThrowing(value = "webLog()", throwing = "e")
+	public void doAfterThrowing(Throwable e) {
+		ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+		HttpServletRequest request = attributes.getRequest();
+		String url = request.getRequestURL().toString();
+		String httpMethod = request.getMethod();
+
+		// 处理完请求，返回内容
+		logger.info(String.format("%s    RESP    OK    %s    %s    %s", requestCode.get(), url, httpMethod, e.getMessage()));
+		e.printStackTrace();
 	}
 
 }

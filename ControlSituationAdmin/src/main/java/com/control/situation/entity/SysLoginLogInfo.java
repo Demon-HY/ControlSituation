@@ -1,6 +1,10 @@
 package com.control.situation.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * SysLoginLog 实体类
@@ -8,89 +12,91 @@ import java.io.Serializable;
  * @author Demon-Coffee
  * @since 1.0
  */
-public class SysLoginLogInfo  implements Serializable {
+public class SysLoginLogInfo implements Serializable {
 
-    private static final long serialVersionUID = -1L;
+	private static final long serialVersionUID = -1L;
 
-        // 主键
-        private Integer id;
+	// 主键
+	private Integer id;
 
-        // 日志名称
-        private String logName;
+	// 日志名称
+	private String logName;
 
-        // 管理员id
-        private Integer userId;
+	// 管理员id
+	private Integer userId;
 
-        // 创建时间
-            @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date createTime;
+	// 创建时间
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date createTime;
 
-        // 是否执行成功
-        private Boolean succeed;
+	// 是否执行成功
+	private Boolean succeed;
 
-        // 具体消息
-        private String message;
+	// 具体消息
+	private String message;
 
-        // 登录ip
-        private String ip;
+	// 登录ip
+	private String ip;
 
-    public SysLoginLogInfo(){}
 
-    public Integer getId() {
-        return id;
-    }
+	public SysLoginLogInfo() {
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public String getLogName() {
-        return logName;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public void setLogName(String logName) {
-        this.logName = logName;
-    }
+	public String getLogName() {
+		return logName;
+	}
 
-    public Integer getUserId() {
-        return userId;
-    }
+	public void setLogName(String logName) {
+		this.logName = logName;
+	}
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
+	public Integer getUserId() {
+		return userId;
+	}
 
-    public Date getCreateTime() {
-        return createTime;
-    }
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+	public Date getCreateTime() {
+		return createTime;
+	}
 
-    public Boolean getSucceed() {
-        return succeed;
-    }
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
-    public void setSucceed(Boolean succeed) {
-        this.succeed = succeed;
-    }
+	public Boolean getSucceed() {
+		return succeed;
+	}
 
-    public String getMessage() {
-        return message;
-    }
+	public void setSucceed(Boolean succeed) {
+		this.succeed = succeed;
+	}
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+	public String getMessage() {
+		return message;
+	}
 
-    public String getIp() {
-        return ip;
-    }
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
 
 }
