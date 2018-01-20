@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.control.situation.mapper.SysDeptMapper">
+    <resultMap id="SysDeptResultMap" type="com.control.situation.entity.SysDeptInfo">
+    	<id column="id" property="id" jdbcType="INTEGER" />
+        <result column="sort" property="sort" jdbcType="INTEGER" />
+        <result column="pid" property="pid" jdbcType="INTEGER" />
+        <result column="pids" property="pids" jdbcType="VARCHAR" />
+        <result column="dept_name" property="deptName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+	id,sort,pid,pids,dept_name
+    </sql>
+
+    <select id="findOne" parameterType="java.lang.Integer" resultMap="SysDeptResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM sys_dept
+        WHERE id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="findAll"  resultMap="SysDeptResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM sys_dept
+    </select>
+
+    <select id="findByParams" resultMap="SysDeptResultMap" parameterType="SysDeptInfo">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM sys_dept
+        <where>
+    
+	        <if test="id != null" >
+			    id = #{id,jdbcType=INTEGER},
+	        </if>
+    
+	        <if test="sort != null" >
+			    sort = #{sort,jdbcType=INTEGER},
+	        </if>
+    
+	        <if test="pid != null" >
+			    pid = #{pid,jdbcType=INTEGER},
+	        </if>
+    
+	        <if test="pids != null" >
+			    pids = #{pids,jdbcType=VARCHAR},
+	        </if>
+    
+	        <if test="dept_name != null" >
+			    dept_name = #{deptName,jdbcType=VARCHAR},
+	        </if>
+        </where>
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM sys_dept
+        WHERE id = #{id,jdbcType=${tempColumn.columnType}}
+    </delete>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.control.situation.sys_dept.SysDeptInfo">
+        INSERT INTO
+        sys_dept (sort,pid,pids,dept_name)
+        values
+        (#{sort,jdbcType=INTEGER},#{pid,jdbcType=INTEGER},#{pids,jdbcType=VARCHAR},#{deptName,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="update" parameterType="com.control.situation.sys_dept.SysDeptInfo">
+        UPDATE sys_dept
+        <set>
+	    	        	    	        
+            <if test="sort != null">
+                sort = #{sort,jdbcType=INTEGER},
+            </if>
+	        	    	        
+            <if test="pid != null">
+                pid = #{pid,jdbcType=INTEGER},
+            </if>
+	        	    	        
+            <if test="pids != null">
+                pids = #{pids,jdbcType=VARCHAR},
+            </if>
+	        	    	        
+            <if test="deptName != null">
+                dept_name = #{deptName,jdbcType=VARCHAR},
+            </if>
+	        	    
+        </set>
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

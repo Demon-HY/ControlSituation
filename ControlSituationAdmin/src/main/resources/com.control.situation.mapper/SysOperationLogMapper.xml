@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.control.situation.mapper.SysOperationLogMapper">
+    <resultMap id="SysOperationLogResultMap" type="com.control.situation.entity.SysOperationLogInfo">
+    	<id column="id" property="id" jdbcType="BIGINT" />
+        <result column="log_type" property="logType" jdbcType="VARCHAR" />
+        <result column="log_name" property="logName" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="module_name" property="moduleName" jdbcType="VARCHAR" />
+        <result column="operation_data" property="operationData" jdbcType="LONGVARCHAR" />
+        <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+        <result column="succeed" property="succeed" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+	id,log_type,log_name,user_id,module_name,operation_data,createtime,succeed,remark
+    </sql>
+
+    <select id="findOne" parameterType="java.lang.Integer" resultMap="SysOperationLogResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM sys_operation_log
+        WHERE id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="findAll"  resultMap="SysOperationLogResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM sys_operation_log
+    </select>
+
+    <select id="findByParams" resultMap="SysOperationLogResultMap" parameterType="SysOperationLogInfo">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM sys_operation_log
+        <where>
+    
+	        <if test="id != null" >
+			    id = #{id,jdbcType=BIGINT},
+	        </if>
+    
+	        <if test="log_type != null" >
+			    log_type = #{logType,jdbcType=VARCHAR},
+	        </if>
+    
+	        <if test="log_name != null" >
+			    log_name = #{logName,jdbcType=VARCHAR},
+	        </if>
+    
+	        <if test="user_id != null" >
+			    user_id = #{userId,jdbcType=INTEGER},
+	        </if>
+    
+	        <if test="module_name != null" >
+			    module_name = #{moduleName,jdbcType=VARCHAR},
+	        </if>
+    
+	        <if test="operation_data != null" >
+			    operation_data = #{operationData,jdbcType=LONGVARCHAR},
+	        </if>
+    
+	        <if test="createtime != null" >
+			    createtime = #{createtime,jdbcType=TIMESTAMP},
+	        </if>
+    
+	        <if test="succeed != null" >
+			    succeed = #{succeed,jdbcType=VARCHAR},
+	        </if>
+    
+	        <if test="remark != null" >
+			    remark = #{remark,jdbcType=VARCHAR},
+	        </if>
+        </where>
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM sys_operation_log
+        WHERE id = #{id,jdbcType=${tempColumn.columnType}}
+    </delete>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.control.situation.sys_operation_log.SysOperationLogInfo">
+        INSERT INTO
+        sys_operation_log (log_type,log_name,user_id,module_name,operation_data,createtime,succeed,remark)
+        values
+        (#{logType,jdbcType=VARCHAR},#{logName,jdbcType=VARCHAR},#{userId,jdbcType=INTEGER},#{moduleName,jdbcType=VARCHAR},#{operationData,jdbcType=LONGVARCHAR},#{createtime,jdbcType=TIMESTAMP},#{succeed,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="update" parameterType="com.control.situation.sys_operation_log.SysOperationLogInfo">
+        UPDATE sys_operation_log
+        <set>
+	    	        	    	        
+            <if test="logType != null">
+                log_type = #{logType,jdbcType=VARCHAR},
+            </if>
+	        	    	        
+            <if test="logName != null">
+                log_name = #{logName,jdbcType=VARCHAR},
+            </if>
+	        	    	        
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+	        	    	        
+            <if test="moduleName != null">
+                module_name = #{moduleName,jdbcType=VARCHAR},
+            </if>
+	        	    	        
+            <if test="operationData != null">
+                operation_data = #{operationData,jdbcType=LONGVARCHAR},
+            </if>
+	        	    	        
+            <if test="createtime != null">
+                createtime = #{createtime,jdbcType=TIMESTAMP},
+            </if>
+	        	    	        
+            <if test="succeed != null">
+                succeed = #{succeed,jdbcType=VARCHAR},
+            </if>
+	        	    	        
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+	        	    
+        </set>
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

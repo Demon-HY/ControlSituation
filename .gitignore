@@ -1,6 +1,9 @@
 *.iml
 *.class
 
-/target/*
+
 /ControlSituationParent/.idea/*
 /ControlSituationAdmin/.idea/*
+/ControlSituationAdmin/target
+/ControlSituationParent/target
+*/target/*

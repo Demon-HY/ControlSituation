@@ -1,6 +1,6 @@
 package com.control.situation.exception;
 
-import com.xqiapp.utils.ClientResult;
+import com.control.situation.utils.ClientResult;
 import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

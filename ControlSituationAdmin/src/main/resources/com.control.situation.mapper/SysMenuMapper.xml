@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.control.situation.mapper.SysMenuMapper">
+    <resultMap id="SysMenuResultMap" type="com.control.situation.entity.SysMenuInfo">
+    	<id column="id" property="id" jdbcType="INTEGER" />
+        <result column="pid" property="pid" jdbcType="INTEGER" />
+        <result column="pids" property="pids" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="icon" property="icon" jdbcType="VARCHAR" />
+        <result column="url" property="url" jdbcType="VARCHAR" />
+        <result column="sort" property="sort" jdbcType="INTEGER" />
+        <result column="level" property="level" jdbcType="BIT" />
+        <result column="menu" property="menu" jdbcType="BIT" />
+        <result column="enable" property="enable" jdbcType="BIT" />
+        <result column="open" property="open" jdbcType="BIT" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+	id,pid,pids,name,icon,url,sort,level,menu,enable,open,create_time,update_time,remark
+    </sql>
+
+    <select id="findOne" parameterType="java.lang.Integer" resultMap="SysMenuResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM sys_menu
+        WHERE id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="findAll"  resultMap="SysMenuResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM sys_menu
+    </select>
+
+    <select id="findByParams" resultMap="SysMenuResultMap" parameterType="SysMenuInfo">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM sys_menu
+        <where>
+    
+	        <if test="id != null" >
+			    id = #{id,jdbcType=INTEGER},
+	        </if>
+    
+	        <if test="pid != null" >
+			    pid = #{pid,jdbcType=INTEGER},
+	        </if>
+    
+	        <if test="pids != null" >
+			    pids = #{pids,jdbcType=VARCHAR},
+	        </if>
+    
+	        <if test="name != null" >
+			    name = #{name,jdbcType=VARCHAR},
+	        </if>
+    
+	        <if test="icon != null" >
+			    icon = #{icon,jdbcType=VARCHAR},
+	        </if>
+    
+	        <if test="url != null" >
+			    url = #{url,jdbcType=VARCHAR},
+	        </if>
+    
+	        <if test="sort != null" >
+			    sort = #{sort,jdbcType=INTEGER},
+	        </if>
+    
+	        <if test="level != null" >
+			    level = #{level,jdbcType=BIT},
+	        </if>
+    
+	        <if test="menu != null" >
+			    menu = #{menu,jdbcType=BIT},
+	        </if>
+    
+	        <if test="enable != null" >
+			    enable = #{enable,jdbcType=BIT},
+	        </if>
+    
+	        <if test="open != null" >
+			    open = #{open,jdbcType=BIT},
+	        </if>
+    
+	        <if test="create_time != null" >
+			    create_time = #{createTime,jdbcType=TIMESTAMP},
+	        </if>
+    
+	        <if test="update_time != null" >
+			    update_time = #{updateTime,jdbcType=TIMESTAMP},
+	        </if>
+    
+	        <if test="remark != null" >
+			    remark = #{remark,jdbcType=VARCHAR},
+	        </if>
+        </where>
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM sys_menu
+        WHERE id = #{id,jdbcType=${tempColumn.columnType}}
+    </delete>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.control.situation.sys_menu.SysMenuInfo">
+        INSERT INTO
+        sys_menu (pid,pids,name,icon,url,sort,level,menu,enable,open,create_time,update_time,remark)
+        values
+        (#{pid,jdbcType=INTEGER},#{pids,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},#{icon,jdbcType=VARCHAR},#{url,jdbcType=VARCHAR},#{sort,jdbcType=INTEGER},#{level,jdbcType=BIT},#{menu,jdbcType=BIT},#{enable,jdbcType=BIT},#{open,jdbcType=BIT},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},#{remark,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="update" parameterType="com.control.situation.sys_menu.SysMenuInfo">
+        UPDATE sys_menu
+        <set>
+	    	        	    	        
+            <if test="pid != null">
+                pid = #{pid,jdbcType=INTEGER},
+            </if>
+	        	    	        
+            <if test="pids != null">
+                pids = #{pids,jdbcType=VARCHAR},
+            </if>
+	        	    	        
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+	        	    	        
+            <if test="icon != null">
+                icon = #{icon,jdbcType=VARCHAR},
+            </if>
+	        	    	        
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+	        	    	        
+            <if test="sort != null">
+                sort = #{sort,jdbcType=INTEGER},
+            </if>
+	        	    	        
+            <if test="level != null">
+                level = #{level,jdbcType=BIT},
+            </if>
+	        	    	        
+            <if test="menu != null">
+                menu = #{menu,jdbcType=BIT},
+            </if>
+	        	    	        
+            <if test="enable != null">
+                enable = #{enable,jdbcType=BIT},
+            </if>
+	        	    	        
+            <if test="open != null">
+                open = #{open,jdbcType=BIT},
+            </if>
+	        	    	        
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+	        	    	        
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+	        	    	        
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+	        	    
+        </set>
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

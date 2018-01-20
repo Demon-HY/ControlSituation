@@ -2,9 +2,9 @@ package com.control.situation.utils;
 
 import java.io.Serializable;
 
-public class JsonResult implements Serializable {
+public class ClientResult implements Serializable {
 
-	private String code="0";
+	private String code;
 	
 	private String message;
 	
@@ -16,7 +16,6 @@ public class JsonResult implements Serializable {
 
 	public void setCode(String code) {
 		this.code = code;
-		this.message = "操作成功";
 	}
 
 	public String getMessage() {
@@ -32,8 +31,6 @@ public class JsonResult implements Serializable {
 	}
 
 	public void setResult(Object result) {
-		this.code = "1";
-		this.message = "操作成功";
 		this.result = result;
 	}
 }

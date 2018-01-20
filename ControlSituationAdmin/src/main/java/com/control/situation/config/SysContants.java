@@ -11,27 +11,14 @@ import java.io.Serializable;
 @EnableAutoConfiguration  
 public class SysContants implements Serializable{
 
-	 /**
-	 * 
-	 */
 	private static final long serialVersionUID = 466599795783194166L;
 
 
 	private static Logger logger = Logger.getLogger(SysContants.class);
 	 
 
-	 	@Value("${goods.expire.time}")
-	    private String STOCKEXPIRE;
-
-
-		public String getSTOCKEXPIRE() {
-			return STOCKEXPIRE;
-		}
-
-
-		public void setSTOCKEXPIRE(String sTOCKEXPIRE) {
-			STOCKEXPIRE = sTOCKEXPIRE;
-		}
+//	 	@Value("${test}")
+//	    private String test;
 	 	
 	 	
 }
