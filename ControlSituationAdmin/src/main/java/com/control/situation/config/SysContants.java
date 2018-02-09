@@ -1,7 +1,5 @@
 package com.control.situation.config;
 
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,8 +11,8 @@ public class SysContants implements Serializable{
 
 	private static final long serialVersionUID = 466599795783194166L;
 
-
-	private static Logger logger = Logger.getLogger(SysContants.class);
+	/** cookie有效时间，单位秒  */
+	public static final int COOKIE_EXPIRE = 86400;
 	 
 
 //	 	@Value("${test}")

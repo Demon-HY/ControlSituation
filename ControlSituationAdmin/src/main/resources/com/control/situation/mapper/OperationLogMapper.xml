@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.control.situation.mapper.OperationLogMapper">
+    <resultMap id="OperationLogResultMap" type="com.control.situation.entity.OperationLogInfo">
+	
+        <id column="id" property="id" jdbcType="BIGINT" />
+		<result column="log_type" property="logType" jdbcType="VARCHAR" />
+		<result column="log_name" property="logName" jdbcType="VARCHAR" />
+		<result column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="module_name" property="moduleName" jdbcType="VARCHAR" />
+		<result column="operation_data" property="operationData" jdbcType="LONGVARCHAR" />
+		<result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+		<result column="succeed" property="succeed" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	
+    </resultMap>
+
+    <sql id="Base_Column_List">
+		id,log_type,log_name,user_id,module_name,operation_data,createtime,succeed,remark
+    </sql>
+
+    <select id="findOne" parameterType="java.lang.Integer" resultMap="OperationLogResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM operation_log
+        WHERE id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="findAll"  resultMap="OperationLogResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM operation_log
+    </select>
+
+    <select id="findByParams" resultMap="OperationLogResultMap" parameterType="com.control.situation.entity.OperationLogInfo">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM operation_log
+        <where>
+		
+            <if test="id != null" >
+				and id = #{id,jdbcType=BIGINT}
+            </if>
+		
+            <if test="logType != null" >
+				and log_type = #{logType,jdbcType=VARCHAR}
+            </if>
+		
+            <if test="logName != null" >
+				and log_name = #{logName,jdbcType=VARCHAR}
+            </if>
+		
+            <if test="userId != null" >
+				and user_id = #{userId,jdbcType=INTEGER}
+            </if>
+		
+            <if test="moduleName != null" >
+				and module_name = #{moduleName,jdbcType=VARCHAR}
+            </if>
+		
+            <if test="operationData != null" >
+				and operation_data = #{operationData,jdbcType=LONGVARCHAR}
+            </if>
+		
+            <if test="createtime != null" >
+				and createtime = #{createtime,jdbcType=TIMESTAMP}
+            </if>
+		
+            <if test="succeed != null" >
+				and succeed = #{succeed,jdbcType=VARCHAR}
+            </if>
+		
+            <if test="remark != null" >
+				and remark = #{remark,jdbcType=VARCHAR}
+            </if>
+		
+        </where>
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM operation_log
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.control.situation.entity.OperationLogInfo">
+        INSERT INTO
+		operation_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+						    		    			    
+            <if test="logType != null">
+		    log_type,
+            </if>
+			    		    			    
+            <if test="logName != null">
+		    log_name,
+            </if>
+			    		    			    
+            <if test="userId != null">
+		    user_id,
+            </if>
+			    		    			    
+            <if test="moduleName != null">
+		    module_name,
+            </if>
+			    		    			    
+            <if test="operationData != null">
+		    operation_data,
+            </if>
+			    		    			    
+            <if test="createtime != null">
+		    createtime,
+            </if>
+			    		    			    
+            <if test="succeed != null">
+		    succeed,
+            </if>
+			    		    			    
+            <if test="remark != null">
+		    remark,
+            </if>
+			    		    
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+	        		        	        		        
+            <if test="logType != null">
+                #{logType,jdbcType=VARCHAR},
+            </if>
+		        	        		        
+            <if test="logName != null">
+                #{logName,jdbcType=VARCHAR},
+            </if>
+		        	        		        
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+		        	        		        
+            <if test="moduleName != null">
+                #{moduleName,jdbcType=VARCHAR},
+            </if>
+		        	        		        
+            <if test="operationData != null">
+                #{operationData,jdbcType=LONGVARCHAR},
+            </if>
+		        	        		        
+            <if test="createtime != null">
+                #{createtime,jdbcType=TIMESTAMP},
+            </if>
+		        	        		        
+            <if test="succeed != null">
+                #{succeed,jdbcType=VARCHAR},
+            </if>
+		        	        		        
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+		        	        
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.control.situation.entity.OperationLogInfo">
+        UPDATE operation_log
+        <set>
+						
+            <if test="logType != null">
+				log_type = #{logType,jdbcType=VARCHAR},
+            </if>
+					
+            <if test="logName != null">
+				log_name = #{logName,jdbcType=VARCHAR},
+            </if>
+					
+            <if test="userId != null">
+				user_id = #{userId,jdbcType=INTEGER},
+            </if>
+					
+            <if test="moduleName != null">
+				module_name = #{moduleName,jdbcType=VARCHAR},
+            </if>
+					
+            <if test="operationData != null">
+				operation_data = #{operationData,jdbcType=LONGVARCHAR},
+            </if>
+					
+            <if test="createtime != null">
+				createtime = #{createtime,jdbcType=TIMESTAMP},
+            </if>
+					
+            <if test="succeed != null">
+				succeed = #{succeed,jdbcType=VARCHAR},
+            </if>
+					
+            <if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+            </if>
+			
+        </set>
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

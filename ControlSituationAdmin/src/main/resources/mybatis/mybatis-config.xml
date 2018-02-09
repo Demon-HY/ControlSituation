@@ -9,7 +9,7 @@
 
     <typeAliases>
         <typeAlias alias="string" type="java.lang.String" />
-        <typeAlias alias="integer" type="java.lang.Integer" />
+        <typeAlias alias="int" type="java.lang.Integer" />
         <typeAlias alias="long" type="java.lang.Long" />
         <typeAlias alias="hashmap" type="java.util.HashMap" />
         <typeAlias alias="linkedhashmap" type="java.util.LinkedHashMap" />

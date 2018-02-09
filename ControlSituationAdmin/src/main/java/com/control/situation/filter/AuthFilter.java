@@ -1,10 +1,18 @@
 package com.control.situation.filter;
 
+import com.control.situation.api.RedisApi;
+import com.control.situation.api.impl.RedisApiImpl;
 import com.control.situation.config.Env;
+import com.control.situation.config.SysContants;
 import com.control.situation.utils.ClientResult;
 import com.control.situation.utils.JsonUtil;
+import com.control.situation.utils.RetCode;
+import com.demon.utils.ValidateUtils;
+import com.demon.utils.http.CookieUtils;
 import com.demon.utils.stat.RetStat;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -14,14 +22,13 @@ import java.io.IOException;
 @Service
 public class AuthFilter implements Filter {
 	
-	@Override
-	public void destroy() {	}
+	private RedisApi redisApi;
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-//		ServletContext servletContext = filterConfig.getServletContext();
-//		ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(servletContext);
-//		channelRouteService = (ChannelRouteService) ctx.getBean("channelRouteServiceImpl");
+		ServletContext servletContext = filterConfig.getServletContext();
+		ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(servletContext);
+		redisApi = (RedisApiImpl) ctx.getBean("redisApiImpl");
 	}
 
 	@Override
@@ -29,6 +36,7 @@ public class AuthFilter implements Filter {
 			throws IOException, ServletException {
 		Env env = new Env();
 		ClientResult c = new ClientResult();
+		env.setClientResult(c);
 
 		HttpServletRequest request= (HttpServletRequest) servletRequest;
 		HttpServletResponse response=(HttpServletResponse) servletResponse;
@@ -41,11 +49,36 @@ public class AuthFilter implements Filter {
 		response.setHeader("Access-Control-Allow-Methods", "POST, GET");
 		response.setHeader("Access-Control-Allow-Headers", "x-requested-with,content-type");
 
-
 		String uri = request.getRequestURI();
-		String token = request.getParameter("token");
+
 		try {
-			if (uri.contains("favicon")) {
+			request.setAttribute("env", env);
+
+			String token = CookieUtils.getCookieValue(request, "token");
+			if (ValidateUtils.notEmpty(token)) {
+				String userId = redisApi.get(token);
+				if (ValidateUtils.isEmpty(userId)) {
+					c.setCode(RetCode.ERR_TOKEN_EXPIRE)
+							.setMessage("TOKEN失效");
+					JsonUtil.sendJsonResponse(response,c);
+					return;
+				}
+				// token 刷新有效时间
+				redisApi.expire(token, SysContants.COOKIE_EXPIRE);
+				env.setUserId(userId);
+				env.setToken(token);
+			}
+
+			// 不需要验证权限的接口
+			if (uri.equals("/api/auth/checkLogin") || uri.equals("/api/auth/login")) {
+				filterChain.doFilter(servletRequest, servletResponse);
+				return;
+			}
+
+			if (ValidateUtils.isEmpty(env.getUserId())) {
+				c.setCode(RetCode.ERR_USER_NOT_LOGIN)
+						.setMessage("请登录");
+				JsonUtil.sendJsonResponse(response,c);
 				return;
 			}
 
@@ -61,4 +94,7 @@ public class AuthFilter implements Filter {
 		}
 
 	}
+
+	@Override
+	public void destroy() {	}
 }

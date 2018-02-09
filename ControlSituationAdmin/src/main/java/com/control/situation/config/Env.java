@@ -11,7 +11,8 @@ import java.io.Serializable;
  */
 public class Env implements Serializable {
 
-	private String token; // 用户唯一标识
+	private String userId; // 用户唯一标识
+	private String token;
 
 	private ClientResult clientResult; // 客户端返回数据
 
@@ -24,6 +25,17 @@ public class Env implements Serializable {
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	/**
+	 * 获取用户 ID
+	 */
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public ClientResult getClientResult() {

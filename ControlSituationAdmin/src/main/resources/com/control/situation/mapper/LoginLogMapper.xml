@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.control.situation.mapper.LoginLogMapper">
+    <resultMap id="LoginLogResultMap" type="com.control.situation.entity.LoginLogInfo">
+	
+        <id column="id" property="id" jdbcType="BIGINT" />
+		<result column="log_name" property="logName" jdbcType="VARCHAR" />
+		<result column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="succeed" property="succeed" jdbcType="BIT" />
+		<result column="message" property="message" jdbcType="VARCHAR" />
+		<result column="ip" property="ip" jdbcType="VARCHAR" />
+	
+    </resultMap>
+
+    <sql id="Base_Column_List">
+		id,log_name,user_id,create_time,succeed,message,ip
+    </sql>
+
+    <select id="findOne" parameterType="java.lang.Integer" resultMap="LoginLogResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM login_log
+        WHERE id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="findAll"  resultMap="LoginLogResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM login_log
+    </select>
+
+    <select id="findByParams" resultMap="LoginLogResultMap" parameterType="com.control.situation.entity.LoginLogInfo">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM login_log
+        <where>
+		
+            <if test="id != null" >
+				and id = #{id,jdbcType=BIGINT}
+            </if>
+		
+            <if test="logName != null" >
+				and log_name = #{logName,jdbcType=VARCHAR}
+            </if>
+		
+            <if test="userId != null" >
+				and user_id = #{userId,jdbcType=INTEGER}
+            </if>
+		
+            <if test="createTime != null" >
+				and create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+		
+            <if test="succeed != null" >
+				and succeed = #{succeed,jdbcType=BIT}
+            </if>
+		
+            <if test="message != null" >
+				and message = #{message,jdbcType=VARCHAR}
+            </if>
+		
+            <if test="ip != null" >
+				and ip = #{ip,jdbcType=VARCHAR}
+            </if>
+		
+        </where>
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM login_log
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.control.situation.entity.LoginLogInfo">
+        INSERT INTO
+		login_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+						    		    			    
+            <if test="logName != null">
+		    log_name,
+            </if>
+			    		    			    
+            <if test="userId != null">
+		    user_id,
+            </if>
+			    		    			    
+            <if test="createTime != null">
+		    create_time,
+            </if>
+			    		    			    
+            <if test="succeed != null">
+		    succeed,
+            </if>
+			    		    			    
+            <if test="message != null">
+		    message,
+            </if>
+			    		    			    
+            <if test="ip != null">
+		    ip,
+            </if>
+			    		    
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+	        		        	        		        
+            <if test="logName != null">
+                #{logName,jdbcType=VARCHAR},
+            </if>
+		        	        		        
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+		        	        		        
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+		        	        		        
+            <if test="succeed != null">
+                #{succeed,jdbcType=BIT},
+            </if>
+		        	        		        
+            <if test="message != null">
+                #{message,jdbcType=VARCHAR},
+            </if>
+		        	        		        
+            <if test="ip != null">
+                #{ip,jdbcType=VARCHAR},
+            </if>
+		        	        
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.control.situation.entity.LoginLogInfo">
+        UPDATE login_log
+        <set>
+						
+            <if test="logName != null">
+				log_name = #{logName,jdbcType=VARCHAR},
+            </if>
+					
+            <if test="userId != null">
+				user_id = #{userId,jdbcType=INTEGER},
+            </if>
+					
+            <if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+					
+            <if test="succeed != null">
+				succeed = #{succeed,jdbcType=BIT},
+            </if>
+					
+            <if test="message != null">
+				message = #{message,jdbcType=VARCHAR},
+            </if>
+					
+            <if test="ip != null">
+				ip = #{ip,jdbcType=VARCHAR},
+            </if>
+			
+        </set>
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

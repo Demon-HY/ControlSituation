@@ -44,7 +44,7 @@ public class WebLoggerAspect {
 	}
 
 	@Before("webLog()")
-	public void doBefore(JoinPoint joinPoint) {
+	public void doBefore(JoinPoint joinPoint){
 		requestCode.set(RandomUtil.getRequestId());
 
 		// 接收到请求，记录请求内容
@@ -52,23 +52,26 @@ public class WebLoggerAspect {
 		HttpServletRequest request = attributes.getRequest();
 		// 记录下请求内容
 		String url = request.getRequestURL().toString();
+		if (ValidateUtils.notEmpty(url) && url.contains("hello")) { // 屏蔽阿里的健康检查
+			return;
+		}
 		String httpMethod = request.getMethod();
 		JSONObject obj = new JSONObject(); // 请求参数
 		//获取所有参数
-		Enumeration<String> enu = request.getParameterNames();
-		while (enu.hasMoreElements()) {
-			String paraName = enu.nextElement();
+		Enumeration<String> enu=request.getParameterNames();
+		while(enu.hasMoreElements()){
+			String paraName= enu.nextElement();
 			obj.put(paraName, request.getParameter(paraName));
 		}
-
 		logger.info(String.format("%s  OK  REQ   %s  %s  %s", requestCode.get(), url, httpMethod, obj.toString()));
 	}
 
 	@AfterReturning(value = "webLog()", returning = "result")
-	public void doAfterReturning(JoinPoint joinPoint, Object result) {
+	public void  doAfterReturning(JoinPoint joinPoint, Object result) {
 		ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 		HttpServletRequest request = attributes.getRequest();
 		HttpServletResponse response = attributes.getResponse();
+		// 请求的唯一标识，客户端通过这个可以查询到该次请求记录
 		response.setHeader("RequestId", requestCode.get());
 
 		String url = request.getRequestURL().toString();
@@ -81,11 +84,10 @@ public class WebLoggerAspect {
 			}
 
 			resultObj = JsonUtil.convertToJSON(result);
-			resultObj = resultObj.length() > 64 ? resultObj.substring(0, 63) : resultObj;
+			resultObj = resultObj.length() > 1024 ? resultObj.substring(0, 1024) : resultObj;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 
 		// 处理完请求，返回内容
 		logger.info(String.format("%s  OK  RESP  %s  %s  %s", requestCode.get(), url, httpMethod, resultObj));

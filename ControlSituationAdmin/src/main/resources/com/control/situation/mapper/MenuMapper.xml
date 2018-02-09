@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.control.situation.mapper.MenuMapper">
+    <resultMap id="MenuResultMap" type="com.control.situation.entity.MenuInfo">
+	
+        <id column="id" property="id" jdbcType="INTEGER" />
+		<result column="pid" property="pid" jdbcType="INTEGER" />
+		<result column="pids" property="pids" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="icon" property="icon" jdbcType="VARCHAR" />
+		<result column="url" property="url" jdbcType="VARCHAR" />
+		<result column="sort" property="sort" jdbcType="INTEGER" />
+		<result column="level" property="level" jdbcType="BIT" />
+		<result column="is_children" property="isChildren" jdbcType="BIT" />
+		<result column="menu" property="menu" jdbcType="BIT" />
+		<result column="enable" property="enable" jdbcType="BIT" />
+		<result column="open" property="open" jdbcType="BIT" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	
+    </resultMap>
+
+    <sql id="Base_Column_List">
+		id,pid,pids,name,icon,url,sort,level,is_children,menu,enable,open,create_time,update_time,remark
+    </sql>
+
+    <select id="findOne" parameterType="java.lang.Integer" resultMap="MenuResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM menu
+        WHERE id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="findAll"  resultMap="MenuResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM menu
+    </select>
+
+    <select id="findByParams" resultMap="MenuResultMap" parameterType="com.control.situation.entity.MenuInfo">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM menu
+        <where>
+		
+            <if test="id != null" >
+				and id = #{id,jdbcType=INTEGER}
+            </if>
+		
+            <if test="pid != null" >
+				and pid = #{pid,jdbcType=INTEGER}
+            </if>
+		
+            <if test="pids != null" >
+				and pids = #{pids,jdbcType=VARCHAR}
+            </if>
+		
+            <if test="name != null" >
+				and name = #{name,jdbcType=VARCHAR}
+            </if>
+		
+            <if test="icon != null" >
+				and icon = #{icon,jdbcType=VARCHAR}
+            </if>
+		
+            <if test="url != null" >
+				and url = #{url,jdbcType=VARCHAR}
+            </if>
+		
+            <if test="sort != null" >
+				and sort = #{sort,jdbcType=INTEGER}
+            </if>
+		
+            <if test="level != null" >
+				and level = #{level,jdbcType=BIT}
+            </if>
+		
+            <if test="isChildren != null" >
+				and is_children = #{isChildren,jdbcType=BIT}
+            </if>
+		
+            <if test="menu != null" >
+				and menu = #{menu,jdbcType=BIT}
+            </if>
+		
+            <if test="enable != null" >
+				and enable = #{enable,jdbcType=BIT}
+            </if>
+		
+            <if test="open != null" >
+				and open = #{open,jdbcType=BIT}
+            </if>
+		
+            <if test="createTime != null" >
+				and create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+		
+            <if test="updateTime != null" >
+				and update_time = #{updateTime,jdbcType=TIMESTAMP}
+            </if>
+		
+            <if test="remark != null" >
+				and remark = #{remark,jdbcType=VARCHAR}
+            </if>
+		
+        </where>
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM menu
+        WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.control.situation.entity.MenuInfo">
+        INSERT INTO
+		menu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+						    		    			    
+            <if test="pid != null">
+		    pid,
+            </if>
+			    		    			    
+            <if test="pids != null">
+		    pids,
+            </if>
+			    		    			    
+            <if test="name != null">
+		    name,
+            </if>
+			    		    			    
+            <if test="icon != null">
+		    icon,
+            </if>
+			    		    			    
+            <if test="url != null">
+		    url,
+            </if>
+			    		    			    
+            <if test="sort != null">
+		    sort,
+            </if>
+			    		    			    
+            <if test="level != null">
+		    level,
+            </if>
+			    		    			    
+            <if test="isChildren != null">
+		    is_children,
+            </if>
+			    		    			    
+            <if test="menu != null">
+		    menu,
+            </if>
+			    		    			    
+            <if test="enable != null">
+		    enable,
+            </if>
+			    		    			    
+            <if test="open != null">
+		    open,
+            </if>
+			    		    			    
+            <if test="createTime != null">
+		    create_time,
+            </if>
+			    		    			    
+            <if test="updateTime != null">
+		    update_time,
+            </if>
+			    		    			    
+            <if test="remark != null">
+		    remark,
+            </if>
+			    		    
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+	        		        	        		        
+            <if test="pid != null">
+                #{pid,jdbcType=INTEGER},
+            </if>
+		        	        		        
+            <if test="pids != null">
+                #{pids,jdbcType=VARCHAR},
+            </if>
+		        	        		        
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+		        	        		        
+            <if test="icon != null">
+                #{icon,jdbcType=VARCHAR},
+            </if>
+		        	        		        
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+		        	        		        
+            <if test="sort != null">
+                #{sort,jdbcType=INTEGER},
+            </if>
+		        	        		        
+            <if test="level != null">
+                #{level,jdbcType=BIT},
+            </if>
+		        	        		        
+            <if test="isChildren != null">
+                #{isChildren,jdbcType=BIT},
+            </if>
+		        	        		        
+            <if test="menu != null">
+                #{menu,jdbcType=BIT},
+            </if>
+		        	        		        
+            <if test="enable != null">
+                #{enable,jdbcType=BIT},
+            </if>
+		        	        		        
+            <if test="open != null">
+                #{open,jdbcType=BIT},
+            </if>
+		        	        		        
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+		        	        		        
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+		        	        		        
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+		        	        
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.control.situation.entity.MenuInfo">
+        UPDATE menu
+        <set>
+						
+            <if test="pid != null">
+				pid = #{pid,jdbcType=INTEGER},
+            </if>
+					
+            <if test="pids != null">
+				pids = #{pids,jdbcType=VARCHAR},
+            </if>
+					
+            <if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+            </if>
+					
+            <if test="icon != null">
+				icon = #{icon,jdbcType=VARCHAR},
+            </if>
+					
+            <if test="url != null">
+				url = #{url,jdbcType=VARCHAR},
+            </if>
+					
+            <if test="sort != null">
+				sort = #{sort,jdbcType=INTEGER},
+            </if>
+					
+            <if test="level != null">
+				level = #{level,jdbcType=BIT},
+            </if>
+					
+            <if test="isChildren != null">
+				is_children = #{isChildren,jdbcType=BIT},
+            </if>
+					
+            <if test="menu != null">
+				menu = #{menu,jdbcType=BIT},
+            </if>
+					
+            <if test="enable != null">
+				enable = #{enable,jdbcType=BIT},
+            </if>
+					
+            <if test="open != null">
+				open = #{open,jdbcType=BIT},
+            </if>
+					
+            <if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+					
+            <if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+					
+            <if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+            </if>
+			
+        </set>
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

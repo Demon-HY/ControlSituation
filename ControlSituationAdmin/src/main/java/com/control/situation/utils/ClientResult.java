@@ -14,23 +14,33 @@ public class ClientResult implements Serializable {
 		return code;
 	}
 
-	public void setCode(String code) {
+	/**
+	 * 设置 code 时，会同时设置默认的 message
+	 * message = RetCode.getMsgByStat(stat)
+	 */
+	public ClientResult setCode(String code) {
 		this.code = code;
+		this.message = RetCode.getMsgByStat(code);
+		return this;
 	}
 
 	public String getMessage() {
 		return message;
 	}
 
-	public void setMessage(String message) {
+	public ClientResult setMessage(String message) {
 		this.message = message;
+		return this;
 	}
 
 	public Object getResult() {
 		return result;
 	}
 
-	public void setResult(Object result) {
+	public ClientResult setResult(Object result) {
 		this.result = result;
+		return this;
 	}
+
+
 }
