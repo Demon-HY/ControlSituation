@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * 登录认证
+ *
  * Created by Demon-Coffee on 2018/2/5 0005.
  */
 @RestController
@@ -31,8 +33,6 @@ public class AuthHttpApi {
 
 	/**
 	 * 验证登录
-	 * @param req
-	 * @return
 	 */
 	@RequestMapping("/checkLogin")
 	public ClientResult checkLogin(HttpServletRequest req) {
@@ -56,8 +56,6 @@ public class AuthHttpApi {
 
 	/**
 	 * 登录
-	 * @param req
-	 * @return
 	 */
 	@RequestMapping("/login")
 	public ClientResult login(HttpServletRequest req, HttpServletResponse resp,
@@ -66,8 +64,8 @@ public class AuthHttpApi {
 		ClientResult c = env.getClientResult();
 
 		if (ValidateUtils.isEmpty(account) || ValidateUtils.isEmpty(password)) {
-			c.setCode(RetCode.ERR_BAD_PARAMS);
-			c.setMessage("参数错误");
+			c.setCode(RetCode.ERR_BAD_PARAMS)
+					.setMessage("参数错误");
 			return c;
 		}
 

@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class ClientResult implements Serializable {
 
 	private String code;
-	
+	// 默认的提示信息
 	private String message;
 	
 	private Object result;

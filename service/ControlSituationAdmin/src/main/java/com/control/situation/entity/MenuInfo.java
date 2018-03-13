@@ -3,6 +3,9 @@ package com.control.situation.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -12,58 +15,74 @@ import java.util.Date;
  * @author Demon-Coffee
  * @since 1.0
  */
+@Table(name = "menu")
 public class MenuInfo implements Serializable {
 
 	private static final long serialVersionUID = -1L;
 
 	// 菜单ID
-	@Column
+	@Id
+	@Column(name = "id")
 	private Integer id;
 
 	// 菜单父编号
+	@Column(name = "pid")
 	private Integer pid;
 
 	// 当前菜单的所有父菜单编号
+	@Column(name = "pids")
 	private String pids;
 
 	// 菜单名称
+	@Column(name = "name")
 	private String name;
 
 	// 菜单图标
+	@Column(name = "id")
 	private String icon;
 
 	// url地址
+	@Column(name = "id")
 	private String url;
 
 	// 菜单排序值
+	@Column(name = "sort")
 	private Integer sort;
 
 	// 菜单层级,(接口没有层级)
+	@Column(name = "level")
 	private Boolean level;
 
 	// 是否有子节点
+	@Column(name = "is_children")
 	private Boolean isChildren;
 
 	// 是否是菜单：1-是，0-不是(接口路由)
+	@Column(name = "menu")
 	private Boolean menu;
 
 	// 菜单状态：1-启用，0-不启用
+	@Column(name = "enable")
 	private Boolean enable;
 
 	// 是否展开：1-打开，0-不打开
+	@Column(name = "open")
 	private Boolean open;
 
 	// 创建时间
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@Column(name = "create_time")
 	private Date createTime;
 
 	// 更新时间
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@Column(name = "update_time")
 	private Date updateTime;
 
 	// 备注
+	@Column(name = "remark")
 	private String remark;
 
 
