@@ -1,66 +1,58 @@
-body, div, span, header, footer, nav, section, aside, article, ul, dl, dt, dd, li, a, p, h1, h2, h3, h4,h5, h6,
-i, b, textarea, button, input, select, figure, figcaption {
-  padding: 0;
+* {
   margin: 0;
-  list-style: none;
-  font-style: normal;
-  text-decoration: none;
-  border: none;
-  color: #333;
-  font-weight: normal;
-  font-family: "Microsoft Yahei", serif;
-  box-sizing: border-box;
-  -webkit-tap-highlight-color:transparent;
-  -webkit-font-smoothing: antialiased;
+  padding: 0;
 }
-
-html,body {
-  height: 100%;
-  width: 100%;
-  background-color: #000;
-}
-
-.clear:after{
-  content: '';
+div,ul,li {
   display: block;
-  clear: both;
+}
+ul,li {
+  list-style: none;
+}
+body {
+  /* font-family: Microsoft Yahei; */
+  font-size: 14px;
+  height: 100%;
+  min-width: 1024px;
+}
+a {
+  text-decoration:none;
+}
+body, input {
+  color: #777;
 }
 
-.clear{
-  zoom:1;
-}
-
-.back_img{
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-}
-
-.margin{
-  margin: 0 auto;
-}
-
-.left{
-  float: left;
-}
-
-.right{
-  float: right;
-}
-
-.hide{
+/* 公用属性 */
+.hidden {
   display: none;
 }
-
-.show{
+.show {
+  display:block;
+}
+/* 清除浮动 */
+.clearfix:after {
+  clear: both;
   display: block;
+  height: 0;
+  visibility: hidden;
+  line-height: 0;
+  content: '\20';
+}
+.clearfix {
+  *display: table;
+  *zoom: 1;
 }
 
-.ellipsis{
+.fl {
+  display: inline;
+  float: left;
+}
+.fr {
+  display: inline;
+  float: right;
+}
+.none {
+  display: none;
+}
+.hidden {
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.paddingTop{
-  padding-top: 1.95rem;
 }
