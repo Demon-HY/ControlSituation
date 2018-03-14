@@ -2,7 +2,7 @@
 import Axios from 'axios'
 
 let http = Axios.create({
-  baseURL: process.env.BASE_URL,
+  baseURL: "http://localhost:8080/",
   responseType: 'json',
   withCredentials: true, // 请求会带上 Cookies
   headers: {
@@ -20,7 +20,7 @@ let http = Axios.create({
   }],
   transformResponse: [(data) => {
     // 这里提前处理返回的数据
-
+    return data;
   }],
   timeout: 3000 // 超时时间
 });
@@ -45,9 +45,9 @@ http.interceptors.response.use(
   }
 );
 
-function apiAxios(method, url, params, response) {
+function apiAxios(method, url) {
   let result = {};
-
+  alert(url);
   http({
     method: method,
     url: url,
@@ -67,7 +67,7 @@ export default {
   get: function (url, params) {
     return apiAxios('GET', url, params)
   },
-  get: function (url, response) {
+  get: function (url) {
     return apiAxios('GET', url)
   },
   post: function (url, params) {

@@ -18,7 +18,7 @@
           </div>
           <div class="bottom">
             <div class="remember"><input type="checkbox"/><span>Keep me logged in</span></div>
-            <input type="submit" value="Login" class="submit-login" @click="toLogin"/>
+            <input type="submit" value="Login" class="submit-login" @click="toLogin(account, password)"/>
             <div class="clear"></div>
           </div>
         </form>
@@ -29,14 +29,20 @@
 </template>
 
 <script>
-  import loginApi from '@/api/user/login_api'
 
   export default {
     name: 'login',
+    data() {
+      return {
+        account: '',
+        password: ''
+      }
+    },
     methods: {
       toLogin: (account, password) => {
-        let result = loginApi.login(account, password);
-        console.log(result);
+        alert('login');
+        let result = this.$loginApi.login(account, password);
+        alert(result);
       }
     }
   }
@@ -58,7 +64,7 @@
 
   h2 {
     font-size: 20px;
-    padding: 0px 0px 40px 0px;
+    padding: 0 0 40px 0;
     color: #aaa;
   }
 
@@ -75,7 +81,7 @@
   }
 
   p {
-    padding: 5px 0px;
+    padding: 5px 0;
   }
 
   .wrapper {
@@ -133,15 +139,15 @@
 
   .form_login label {
     display: block;
-    padding: 10px 30px 0px 30px;
-    margin: 10px 0px 0px 0px;
+    padding: 10px 30px 0 30px;
+    margin: 10px 0 0 0;
   }
 
   .form_login input[type="text"],
   .form_login input[type="password"] {
     border: solid 1px #E5E5E5;
     background: #FFFFFF;
-    margin: 5px 30px 0px 30px;
+    margin: 5px 30px 0 30px;
     padding: 9px;
     display: block;
     font-size: 16px;
@@ -160,9 +166,9 @@
       #EEEEEE 1px,
       #FFFFFF 25px
     );
-    -moz-box-shadow: 0px 0px 8px #f0f0f0;
-    -webkit-box-shadow: 0px 0px 8px #f0f0f0;
-    box-shadow: 0px 0px 8px #f0f0f0;
+    -moz-box-shadow: 0 0 8px #f0f0f0;
+    -webkit-box-shadow: 0 0 8px #f0f0f0;
+    box-shadow: 0 0 8px #f0f0f0;
   }
 
   .form_login input[type="text"]:focus,
@@ -191,13 +197,13 @@
   .form_login div.remember {
     float: left;
     width: 140px;
-    margin: 20px 0px 20px 30px;
+    margin: 20px 0 20px 30px;
     font-size: 11px;
   }
 
   .form_login div.remember input {
     float: left;
-    margin: 2px 5px 0px 0px;
+    margin: 2px 5px 0 0;
   }
 
   .form_login span.error {
@@ -222,20 +228,20 @@
     cursor: pointer;
     float: right;
     margin: 15px 20px 10px 10px;
-    text-shadow: 0px 1px 0px #fff;
+    text-shadow: 0 1px 0 #fff;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     border-radius: 4px;
-    -moz-box-shadow: 0px 0px 2px #fff inset;
-    -webkit-box-shadow: 0px 0px 2px #fff inset;
-    box-shadow: 0px 0px 2px #fff inset;
+    -moz-box-shadow: 0 0 2px #fff inset;
+    -webkit-box-shadow: 0 0 2px #fff inset;
+    box-shadow: 0 0 2px #fff inset;
   }
 
   .form_login input[type="submit"]:hover {
     background: #d9d9d9;
-    -moz-box-shadow: 0px 0px 2px #eaeaea inset;
-    -webkit-box-shadow: 0px 0px 2px #eaeaea inset;
-    box-shadow: 0px 0px 2px #eaeaea inset;
+    -moz-box-shadow: 0 0 2px #eaeaea inset;
+    -webkit-box-shadow: 0 0 2px #eaeaea inset;
+    box-shadow: 0 0 2px #eaeaea inset;
     color: #222;
   }
 </style>

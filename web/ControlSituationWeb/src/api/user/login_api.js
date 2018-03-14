@@ -15,4 +15,7 @@ const loginApi = {
   }
 };
 
-module.exports = loginApi;
+// module.exports = loginApi;
+export default {
+  loginApi: loginApi
+};

@@ -7,14 +7,19 @@ import Vuex from 'vuex'
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import '../static/css/main.css'
-
 import store from './store/store'
+
+import '../static/css/main.css'
+import loginApi from './api/user/login_api'
+
+
+
 
 Vue.use(ElementUI);
 Vue.use(Vuex);
 
 Vue.config.productionTip = false;
+Vue.prototype.$loginApi = loginApi;
 
 /* eslint-disable no-new */
 new Vue({
