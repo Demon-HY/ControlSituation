@@ -3,44 +3,48 @@ package com.control.situation.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Role 实体类
- *
  * @author Demon-Coffee
  * @since 1.0
  */
+@Table(name = "role")
 public class RoleInfo implements Serializable {
 
 	private static final long serialVersionUID = -1L;
 
 	// 角色ID
+	@Id
+	@Column(name = "id")
 	private Integer id;
 
 	// 角色名称
+	@Column(name = "name")
 	private String name;
 
 	// 角色描述
+	@Column(name = "description")
 	private String description;
 
 	// 创建时间
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@Column(name = "create_time")
 	private Date createTime;
 
 	// 更新时间
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@Column(name = "update_time")
 	private Date updateTime;
 
 
 	public RoleInfo(){}
-
-	public RoleInfo(String name) {
-		this.name = name;
-	}
 
 	public Integer getId() {
 		return id;

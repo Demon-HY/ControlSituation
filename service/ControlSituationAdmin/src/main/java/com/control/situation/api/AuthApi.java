@@ -4,6 +4,8 @@ import com.control.situation.config.Env;
 import com.control.situation.utils.ClientResult;
 
 /**
+ * 内部模块访问接口
+ *
  * Created by Demon-Coffee on 2018/2/7 0007.
  */
 public interface AuthApi {

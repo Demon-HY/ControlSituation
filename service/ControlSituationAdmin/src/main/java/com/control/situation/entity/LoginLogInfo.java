@@ -10,8 +10,6 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * LoginLog 实体类
- *
  * @author Demon-Coffee
  * @since 1.0
  */

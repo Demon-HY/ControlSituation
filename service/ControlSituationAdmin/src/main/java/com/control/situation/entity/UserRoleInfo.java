@@ -1,24 +1,34 @@
 package com.control.situation.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
- * UserRole 实体类
- *
  * @author Demon-Coffee
  * @since 1.0
  */
+@Table(name = "user_role")
 public class UserRoleInfo implements Serializable {
 
 	private static final long serialVersionUID = -1L;
 
 	// 主键
+	@Id
+	@Column(name = "id")
 	private Integer id;
 
 	// 用户ID
+	@Column(name = "user_id")
 	private Integer userId;
 
 	// 角色ID
+	@Column(name = "role_id")
 	private Integer roleId;
 
 

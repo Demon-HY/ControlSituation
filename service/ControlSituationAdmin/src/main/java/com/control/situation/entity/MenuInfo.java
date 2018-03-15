@@ -10,8 +10,6 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Menu 实体类
- *
  * @author Demon-Coffee
  * @since 1.0
  */
@@ -38,11 +36,11 @@ public class MenuInfo implements Serializable {
 	private String name;
 
 	// 菜单图标
-	@Column(name = "id")
+	@Column(name = "icon")
 	private String icon;
 
 	// url地址
-	@Column(name = "id")
+	@Column(name = "url")
 	private String url;
 
 	// 菜单排序值
