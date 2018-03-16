@@ -30,6 +30,8 @@
 
 <script>
 
+  import {login, checkLogin} from '@/api/user/login_api'
+
   export default {
     name: 'login',
     data() {
@@ -39,10 +41,8 @@
       }
     },
     methods: {
-      toLogin: (account, password) => {
-        alert('login');
-        let result = this.$loginApi.login(account, password);
-        alert(result);
+      toLogin(account, password) {
+        let result = login(account, password);
       }
     }
   }

@@ -10,7 +10,6 @@ import 'element-ui/lib/theme-chalk/index.css'
 import store from './store/store'
 
 import '../static/css/main.css'
-import loginApi from './api/user/login_api'
 
 
 
@@ -19,7 +18,22 @@ Vue.use(ElementUI);
 Vue.use(Vuex);
 
 Vue.config.productionTip = false;
-Vue.prototype.$loginApi = loginApi;
+
+// 路由请求拦截
+router.beforeEach((to, from, next) => {
+  //NProgress.start();
+  // if (to.path === '/toLogin') {
+  //   sessionStorage.removeItem('user');
+  // }
+  // let user = JSON.parse(sessionStorage.getItem('user'));
+  // if (!user && to.path !== '/login') {
+  //   next({ path: '/login' })
+  // } else {
+  //   next()
+  // }
+
+  next()
+});
 
 /* eslint-disable no-new */
 new Vue({
