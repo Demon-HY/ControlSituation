@@ -42,7 +42,13 @@
     },
     methods: {
       toLogin(account, password) {
-        let result = login(account, password);
+        login(account, password)
+        .then(res => {
+          alert(res);
+        })
+        .catch(err => {
+          alert(err);
+        });
       }
     }
   }

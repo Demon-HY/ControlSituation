@@ -1,10 +1,10 @@
 // HTTP Axios 请求封装
 import Axios from 'axios'
 import Vue from 'vue';
-// import store from '../store'
+
 const http = Axios.create({
   // baseURL: process.env.BASE_URL,
-  baseURL: 'http://localhost:8080/',
+  baseURL: 'http://localhost:8083/',
   responseType: 'json',
   withCredentials: true, // 请求会带上 Cookies
   headers: {
@@ -33,17 +33,18 @@ const http = Axios.create({
 http.interceptors.request.use(config => {
     return config;
   }, error => {
-    console.log(error);
+    alert(error);
     return Promise.reject(error);
   }
 );
 
 // 响应时的拦截
-http.interceptors.response.use(response => {
-    return response
+http.interceptors.response.use(res => {
+    alert(res);
+    return res;
   },
   error => {
-    console.log(error);// for debug
+    alert(error);
     // Vue.$message.error(error.message);
     return Promise.reject(error);
   }
@@ -72,5 +73,3 @@ export default {
     return apiAxios('DELETE', url, params)
   }
 }
-
-// export default http;
