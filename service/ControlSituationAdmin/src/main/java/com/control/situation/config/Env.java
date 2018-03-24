@@ -1,6 +1,6 @@
 package com.control.situation.config;
 
-import com.control.situation.utils.ClientResult;
+import com.control.situation.utils.returns.ClientResult;
 
 import java.io.Serializable;
 

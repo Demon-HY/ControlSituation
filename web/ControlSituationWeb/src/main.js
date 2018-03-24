@@ -5,18 +5,15 @@ import App from './App'
 import router from './router'
 import Vuex from 'vuex'
 
-import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-Vue.use(ElementUI);
 
 import store from './store/store'
 import '../static/css/main.css'
+import '@/utils/element-init'
 
 Vue.use(Vuex);
 
 Vue.config.productionTip = true;
-
-Vue.$message.error('test');
 
 // 路由请求拦截
 router.beforeEach((to, from, next) => {

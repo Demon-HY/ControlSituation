@@ -2,7 +2,7 @@ package com.control.situation.listener;
 
 import com.control.situation.init.InitRole;
 import com.control.situation.init.InitUser;
-import com.demon.utils.exception.LogicalException;
+import com.control.situation.utils.exception.LogicalException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;

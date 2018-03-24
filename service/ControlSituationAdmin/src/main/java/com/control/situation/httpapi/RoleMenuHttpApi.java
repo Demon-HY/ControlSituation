@@ -2,7 +2,7 @@ package com.control.situation.httpapi;
 
 import com.control.situation.api.RoleMenuApi;
 import com.control.situation.config.Env;
-import com.control.situation.utils.ClientResult;
+import com.control.situation.utils.returns.ClientResult;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

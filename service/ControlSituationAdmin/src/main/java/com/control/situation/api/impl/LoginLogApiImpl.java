@@ -3,7 +3,7 @@ package com.control.situation.api.impl;
 import com.control.situation.api.LoginLogApi;
 import com.control.situation.config.Env;
 import com.control.situation.dao.LoginLogDao;
-import com.control.situation.utils.ClientResult;
+import com.control.situation.utils.returns.ClientResult;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

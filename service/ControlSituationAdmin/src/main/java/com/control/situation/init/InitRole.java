@@ -1,14 +1,14 @@
 package com.control.situation.init;
 
 import com.control.situation.dao.RoleDao;
+import com.control.situation.dao.impl.RoleDaoImpl;
 import com.control.situation.entity.RoleInfo;
-import com.demon.utils.ValidateUtils;
+import com.control.situation.utils.ValidateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by Demon-Coffee on 2018/2/7 0007.
@@ -19,7 +19,7 @@ public class InitRole {
 	@Autowired
 	private Environment env;
 	@Autowired
-	private RoleDao roleDao;
+	private RoleDaoImpl roleDao;
 
 	/**
 	 * 初始化角色
@@ -32,7 +32,7 @@ public class InitRole {
 			String roleDescription = env.getProperty(String.format("control.role.init.%s.description", name));
 
 			// 检查默认角色是否已创建
-			List<RoleInfo> roles = roleDao.findByParams(new RoleInfo(roleName));
+			RoleInfo roles = roleDao.findByRoleName(roleName);
 			if (ValidateUtils.notEmpty(roles)) {
 				System.out.println(String.format("Role %s is exists!", roleName));
 				continue;

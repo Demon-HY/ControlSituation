@@ -4,10 +4,10 @@ import com.control.situation.api.AuthApi;
 import com.control.situation.config.Env;
 import com.control.situation.dao.UserDao;
 import com.control.situation.entity.UserInfo;
-import com.control.situation.utils.ClientResult;
-import com.control.situation.utils.RetCode;
-import com.control.situation.utils.SSHAUtils;
-import com.demon.utils.ValidateUtils;
+import com.control.situation.utils.returns.ClientResult;
+import com.control.situation.utils.returns.RetCode;
+import com.control.situation.utils.crypto.SSHAUtils;
+import com.control.situation.utils.ValidateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

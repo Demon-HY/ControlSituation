@@ -1,7 +1,7 @@
 package com.control.situation.api.impl;
 
 import com.control.situation.api.RedisApi;
-import com.control.situation.utils.JsonUtil;
+import com.control.situation.utils.conversion.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;

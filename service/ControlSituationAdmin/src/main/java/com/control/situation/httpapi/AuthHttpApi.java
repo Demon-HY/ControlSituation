@@ -5,17 +5,19 @@ import com.control.situation.api.RedisApi;
 import com.control.situation.config.Env;
 import com.control.situation.config.SysContants;
 import com.control.situation.entity.UserInfo;
-import com.control.situation.utils.ClientResult;
-import com.control.situation.utils.RetCode;
-import com.demon.utils.RandomUtil;
-import com.demon.utils.ValidateUtils;
-import com.demon.utils.http.CookieUtils;
+import com.control.situation.utils.RandomUtil;
+import com.control.situation.utils.ValidateUtils;
+import com.control.situation.utils.http.CookieUtils;
+import com.control.situation.utils.returns.ClientResult;
+import com.control.situation.utils.returns.RetCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * 登录认证
@@ -64,13 +66,11 @@ public class AuthHttpApi {
 		ClientResult c = env.getClientResult();
 
 		if (ValidateUtils.isEmpty(account) || ValidateUtils.isEmpty(password)) {
-			c.setCode(RetCode.ERR_BAD_PARAMS)
-					.setMessage("参数错误");
-			return c;
+			return c.setCode(RetCode.ERR_BAD_PARAMS);
 		}
 
 		c = authApi.login(env, account, password);
-		if (c.getCode() != null) {
+		if (!c.getCode().equals(RetCode.OK)) {
 			return c;
 		}
 		UserInfo user = (UserInfo) c.getResult();
@@ -84,8 +84,10 @@ public class AuthHttpApi {
 		CookieUtils.addCookie(resp, "token", token, SysContants.COOKIE_EXPIRE);
 
 		user.setPassword("");
-		user.setToken(token);
+		Map<String, Object> result = new LinkedHashMap<>();
+		result.put("token", token);
+		result.put("user", user);
 
-		return c.setCode(RetCode.OK);
+		return c.setResult(result);
 	}
 }

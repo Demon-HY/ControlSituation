@@ -1,21 +1,20 @@
 package com.control.situation.init;
 
 import com.alibaba.fastjson.JSONObject;
-import com.control.situation.dao.RoleDao;
-import com.control.situation.dao.UserDao;
-import com.control.situation.dao.UserRoleDao;
+import com.control.situation.dao.impl.RoleDaoImpl;
+import com.control.situation.dao.impl.UserDaoImpl;
+import com.control.situation.dao.impl.UserRoleDaoImpl;
 import com.control.situation.entity.RoleInfo;
 import com.control.situation.entity.UserInfo;
 import com.control.situation.entity.UserRoleInfo;
-import com.control.situation.utils.SSHAUtils;
-import com.demon.utils.ValidateUtils;
-import com.demon.utils.exception.LogicalException;
+import com.control.situation.utils.crypto.SSHAUtils;
+import com.control.situation.utils.ValidateUtils;
+import com.control.situation.utils.exception.LogicalException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * 用户初始化,在程序启动时执行
@@ -28,11 +27,11 @@ public class InitUser {
     @Autowired
     private Environment env;
     @Autowired
-    private UserDao userDao;
+    private UserDaoImpl userDao;
     @Autowired
-    private RoleDao roleDao;
+    private RoleDaoImpl roleDao;
     @Autowired
-    private UserRoleDao userRoleDao;
+    private UserRoleDaoImpl userRoleDao;
 
     /**
      * 初始化用户，如果已创建，目前则不做处理
@@ -69,11 +68,10 @@ public class InitUser {
 
 	            // 设置用户角色
 	            // 检查默认角色是否已创建
-	            List<RoleInfo> roles = roleDao.findByParams(new RoleInfo(attrs.getString("role")));
-	            if (ValidateUtils.isEmpty(roles)) {
+                RoleInfo role = roleDao.findByRoleName(attrs.getString("role"));
+	            if (ValidateUtils.isEmpty(role)) {
 		            throw new LogicalException("INIT_ERROR", "Please create role...");
 	            }
-	            RoleInfo role = roles.get(0);
 	            UserRoleInfo userRoleInfo = new UserRoleInfo();
 	            userRoleInfo.setUserId(user.getId());
 	            userRoleInfo.setRoleId(role.getId());

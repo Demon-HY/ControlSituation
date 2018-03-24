@@ -1,5 +1,7 @@
 package com.control.situation.common.jdbc;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import java.util.List;
 
 /**
@@ -7,6 +9,8 @@ import java.util.List;
  * Created by Demon-Coffee on 2018/3/15.
  */
 public interface CommonDao<T> {
+
+	JdbcTemplate getJdbcTemplate();
 
 	/**
 	 * 根据主键查询一条数据
@@ -55,12 +59,10 @@ public interface CommonDao<T> {
 	 * 如果对象主键不存在，则会新建
 	 * 如果对象主键已经存在，则会更新
 	 *
-	 * @param tableName 表名
-	 * @param pkName    主键字段名
 	 * @param entity    要保存的对象实体
-	 * @return 状态码 OK/ unique 重复错误
+	 * @return
 	 */
-	Long insert(String tableName, String pkName, T entity);
+	Long insert(T entity);
 
 	/**
 	 * 保存一个对象为一条数据库记录

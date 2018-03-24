@@ -4,12 +4,11 @@ import com.control.situation.api.RedisApi;
 import com.control.situation.api.impl.RedisApiImpl;
 import com.control.situation.config.Env;
 import com.control.situation.config.SysContants;
-import com.control.situation.utils.ClientResult;
-import com.control.situation.utils.JsonUtil;
-import com.control.situation.utils.RetCode;
-import com.demon.utils.ValidateUtils;
-import com.demon.utils.http.CookieUtils;
-import com.demon.utils.stat.RetStat;
+import com.control.situation.utils.ValidateUtils;
+import com.control.situation.utils.returns.ClientResult;
+import com.control.situation.utils.conversion.JsonUtil;
+import com.control.situation.utils.returns.RetCode;
+import com.control.situation.utils.http.CookieUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -58,8 +57,7 @@ public class AuthFilter implements Filter {
 			if (ValidateUtils.notEmpty(token)) {
 				String userId = redisApi.get(token);
 				if (ValidateUtils.isEmpty(userId)) {
-					c.setCode(RetCode.ERR_TOKEN_EXPIRE)
-							.setMessage("TOKEN失效");
+					c.setCode(RetCode.ERR_TOKEN_EXPIRE);
 					JsonUtil.sendJsonResponse(response,c);
 					return;
 				}
@@ -76,8 +74,7 @@ public class AuthFilter implements Filter {
 			}
 
 			if (ValidateUtils.isEmpty(env.getUserId())) {
-				c.setCode(RetCode.ERR_USER_NOT_LOGIN)
-						.setMessage("请登录");
+				c.setCode(RetCode.ERR_USER_NOT_LOGIN);
 				JsonUtil.sendJsonResponse(response,c);
 				return;
 			}
@@ -85,7 +82,7 @@ public class AuthFilter implements Filter {
 			filterChain.doFilter(servletRequest, servletResponse);
 		} catch (Exception e) {
 			e.printStackTrace();
-			c.setMessage(RetStat.ERR_SERVER_EXCEPTION);
+			c.setCode(RetCode.ERR_SERVER_EXCEPTION);
 			try {
 				JsonUtil.sendJsonResponse(response,c);
 			} catch (Exception e1) {

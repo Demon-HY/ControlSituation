@@ -1,7 +1,7 @@
 package com.control.situation.api;
 
 import com.control.situation.config.Env;
-import com.control.situation.utils.ClientResult;
+import com.control.situation.utils.returns.ClientResult;
 
 /**
  * 内部模块访问接口
