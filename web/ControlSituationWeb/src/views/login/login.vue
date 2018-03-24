@@ -18,7 +18,7 @@
           </div>
           <div class="bottom">
             <div class="remember"><input type="checkbox"/><span>Keep me logged in</span></div>
-            <input type="submit" value="Login" class="submit-login" @click="toLogin(account, password)"/>
+            <input type="button" value="Login" class="submit-login" @click="login(account, password)"/>
             <div class="clear"></div>
           </div>
         </form>
@@ -41,15 +41,13 @@
       }
     },
     methods: {
-      toLogin(account, password) {
-        login(account, password)
-        .then(res => {
-          alert(res);
-        })
-        .catch(err => {
-          alert(err);
-        });
-      }
+      login
+      // toLogin(account, password) {
+      //   login(account, password)
+      //   .then(res => {
+      //     alert(res);
+      //   });
+      // }
     }
   }
 </script>
@@ -221,7 +219,7 @@
     margin: 4px 30px;
   }
 
-  .form_login input[type="submit"] {
+  .form_login input[type="button"] {
     background: #e3e3e3;
     border: 1px solid #ccc;
     color: #333;
@@ -243,7 +241,7 @@
     box-shadow: 0 0 2px #fff inset;
   }
 
-  .form_login input[type="submit"]:hover {
+  .form_login input[type="button"]:hover {
     background: #d9d9d9;
     -moz-box-shadow: 0 0 2px #eaeaea inset;
     -webkit-box-shadow: 0 0 2px #eaeaea inset;

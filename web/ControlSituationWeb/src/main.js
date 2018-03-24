@@ -7,17 +7,16 @@ import Vuex from 'vuex'
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import store from './store/store'
+Vue.use(ElementUI);
 
+import store from './store/store'
 import '../static/css/main.css'
 
-
-
-
-Vue.use(ElementUI);
 Vue.use(Vuex);
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = true;
+
+Vue.$message.error('test');
 
 // 路由请求拦截
 router.beforeEach((to, from, next) => {

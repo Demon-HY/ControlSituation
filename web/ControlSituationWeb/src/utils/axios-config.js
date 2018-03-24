@@ -33,43 +33,42 @@ const http = Axios.create({
 http.interceptors.request.use(config => {
     return config;
   }, error => {
-    alert(error);
     return Promise.reject(error);
   }
 );
 
 // 响应时的拦截
-http.interceptors.response.use(res => {
-    alert(res);
-    return res;
+http.interceptors.response.use(resp => {
+    return resp;
   },
   error => {
-    alert(error);
-    // Vue.$message.error(error.message);
+    console.log(error);
+    console.log(Vue.$message);
+    Vue.$message.error('test');
     return Promise.reject(error);
   }
 );
 
-function apiAxios(method, url, params) {
+function apiAxios(method, url, params, callback) {
   return http({
     method: method,
     url: url,
     data: method === 'POST' || method === 'PUT' ? params : null,
     params: method === 'GET' || method === 'DELETE' ? params : null,
-  });
+  }, callback);
 }
 
 export default {
-  get: function (url, params) {
-    return apiAxios('GET', url, params)
+  get: function (url, params, callback) {
+    return apiAxios('GET', url, params, callback)
   },
-  post: function (url, params) {
-    return apiAxios('POST', url, params)
+  post: function (url, params, callback) {
+    return apiAxios('POST', url, params, callback)
   },
-  put: function (url, params) {
-    return apiAxios('PUT', url, params)
+  put: function (url, params, callback) {
+    return apiAxios('PUT', url, params, callback)
   },
-  delete: function (url, params) {
-    return apiAxios('DELETE', url, params)
+  delete: function (url, params, callback) {
+    return apiAxios('DELETE', url, params, callback)
   }
 }
