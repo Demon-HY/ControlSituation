@@ -1,7 +1,16 @@
 <template>
-  <div class="el-header">
-    <div class="logo el-col el-col-10"></div>
-  </div>
+  <!--<div class="el-header">-->
+    <!--<div class="logo el-col el-col-10"></div>-->
+  <!--</div>-->
+  <el-header>
+    <el-row>
+      <el-col :span="5"><div class="grid-content bg-purple">
+        <img class="logo" :src="logo"/>
+      </div></el-col>
+      <el-col :span="14"><div class="grid-content bg-purple-light"></div></el-col>
+      <el-col :span="5"><div class="grid-content bg-purple"></div></el-col>
+    </el-row>
+  </el-header>
 </template>
 
 <script>
@@ -9,13 +18,14 @@
     name: 'header-nav',
     data() {
       return {
+        logo: '/static/logo.png'
       }
     }
   }
 </script>
 
 <style>
-  .el-header {
+  el-header {
     background-color: #B3C0D1;
     color: #333;
     text-align: center;
@@ -24,7 +34,7 @@
   }
 
   .logo {
-    width: 300px;
+    width: 60px;
   }
 </style>
 
