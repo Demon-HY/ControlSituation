@@ -17,7 +17,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(Exception.class)
 	public ClientResult handleException(Exception e) {
 		ClientResult c = new ClientResult();
-		c.setMessage(RetCode.ERR_SERVER_EXCEPTION);
+		c.setCode(RetCode.ERR_SERVER_EXCEPTION);
 		return c;
 	}
 }

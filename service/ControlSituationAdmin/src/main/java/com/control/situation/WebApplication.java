@@ -8,13 +8,15 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
+ * 入口
+ *
  * Created by Demon-Coffee on 2018/1/18 0018.
  */
 @SpringBootApplication
 @EnableAutoConfiguration
 // mybatis
 @MapperScan("com.control.situation.mapper")
-// scheduling
+// scheduling，开启异步事件
 @EnableAsync
 // 配置事务
 @EnableTransactionManagement

@@ -21,7 +21,7 @@ public class UserInfo implements Serializable {
 	// 主键id
 	@Id
 	@Column(name = "id")
-	private Integer id;
+	private Long id;
 
 	// 头像
 	@Column(name = "avatar")
@@ -66,11 +66,11 @@ public class UserInfo implements Serializable {
 
 	public UserInfo(){}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

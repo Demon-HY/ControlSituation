@@ -249,84 +249,6 @@ public class DateUtils {
     }
 
     /**
-     * 获取昨天日期
-     * @author inning
-     * @DateTime 2015-7-20 上午11:37:27
-     * @param date
-     * @return
-     */
-    public static String getYesterDay(Date date) {
-        java.text.Format formatter = new SimpleDateFormat("yyyy-MM-dd");
-        long beforeTime = (date.getTime() / 1000) - 24 * 60 * 60;
-        date.setTime(beforeTime * 1000);
-
-        return formatter.format(date);
-    }
-
-    /**
-     * 获取一周前的日期(当前日期往前推7天)
-     *
-     * @param date
-     * @return
-     */
-    public static String getWeekdayBeforeDate(Date date) {
-        java.text.Format formatter = new SimpleDateFormat("yyyy-MM-dd");
-        long beforeTime = (date.getTime() / 1000) - 24 * 60 * 60 * 7;
-        date.setTime(beforeTime * 1000);
-
-        return formatter.format(date);
-    }
-
-    /**
-     * 获取一个月之前的时间戳
-     * @return unix 时间戳
-     */
-//    public static long getLastMonthTime() {
-//        return getDayBegin(getCurrentTimeMillis()) - (86400000L *30);
-//    }
-
-    /**
-     * 获取一月前的日期(当前日期往前推30天)
-     *
-     * @param date
-     * @return
-     */
-    public static String getMonthBeforeDate(Date date) {
-        java.text.Format formatter = new SimpleDateFormat("yyyy-MM-dd");
-        long beforeTime = (date.getTime() / 1000) - 24 * 60 * 60 * 30;
-        date.setTime(beforeTime * 1000);
-
-        return formatter.format(date);
-    }
-
-    /**
-     * 获取三月前的日期(当前日期往前推90天)
-     *
-     * @param date
-     * @return
-     */
-    public static String get3MonthBeforeDate(Date date) {
-        java.text.Format formatter = new SimpleDateFormat("yyyy-MM-dd");
-        long beforeTime = (date.getTime() / 1000) - 24 * 60 * 60 * 30 * 3;
-        date.setTime(beforeTime * 1000);
-
-        return formatter.format(date);
-    }
-
-    /**
-     * 获取一年后的日期
-     *
-     * @return
-     */
-    public static String getNextYear(int chooseYear, Date date) {
-        java.text.Format formatter = new SimpleDateFormat("yyyy-MM-dd");
-        long beforeTime = (date.getTime() / 1000) + 60 * 60 * 24 * 365 * chooseYear;
-        date.setTime(beforeTime * 1000);
-
-        return formatter.format(date);
-    }
-
-    /**
      * 根据生日计算年龄
      *
      * @param birthDay
@@ -413,24 +335,82 @@ public class DateUtils {
     }
 
     /**
+     * 获取一周前的日期
+     */
+    public static String getWeekdayBeforeDate() {
+//		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//		Calendar c = Calendar.getInstance();
+//
+//		//过去七天
+//		c.setTime(new Date());
+//		c.add(Calendar.DATE, - 7);
+//		Date d = c.getTime();
+//		return format.format(d);
+        return getBeforeDate(Calendar.DATE, -7);
+    }
+
+    /**
+     * 获取一月前的日期
+     */
+    public static String getOneMonthBeforeDate() {
+        return getBeforeDate(Calendar.MONTH, -1);
+    }
+
+    /**
+     * 获取三月前的日期
+     */
+    public static String getThreeMonthBeforeDate() {
+        return getBeforeDate(Calendar.MONTH, -3);
+    }
+
+    /**
+     * 获取六月前的日期
+     */
+    public static String getSixMonthBeforeDate() {
+        return getBeforeDate(Calendar.MONTH, -6);
+    }
+
+    /**
+     * 获取一年前的日期
+     */
+    public static String getOneYearBeforeDate() {
+        return getBeforeDate(Calendar.YEAR, -1);
+    }
+
+    /**
+     * 获取当前日期往前的天数
+     * @param dateType 日期类型，用 Calendar
+     * @param amount 往前的时间
+     * @return
+     */
+    private static String getBeforeDate(int dateType, int amount) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Calendar c = Calendar.getInstance();
+
+        c.setTime(new Date());
+        c.add(dateType, amount);
+        Date m = c.getTime();
+        return format.format(m);
+    }
+
+    /**
+     * 获取当前日期往后的天数
+     * @param dateType 日期类型，用 Calendar
+     * @param amount 往前的时间
+     * @return
+     */
+    public static Date getAfterDate(Date time, int dateType, int amount) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(time);
+        c.add(dateType, amount);
+        return c.getTime();
+    }
+
+    /**
      * 测试
      */
     static class Tester {
         public static void main(String[] args) {
-            System.out.println(longTimeToString(14999990610451L));
-
-            System.out.println(longTimeToString(1463705675664L, "HH:mm:ss yyyy-MM-dd"));
-            System.currentTimeMillis();
-            System.out.println(getCurrentTimeDate());
-
-            String dateStr = "2015-12-12 12:00:00";
-            String end = "2015-12-12 12:10:12";
-            long diff = diffDate(DIFF_SECOND, dateStr, end);
-            System.out.println(diff);
-
-
-            System.out.println(getYesterDay(new Date()));
-            System.out.println(getWeekdayBeforeDate(new Date()));
         }
     }
 }

@@ -1,5 +1,8 @@
 package com.control.situation.common.jdbc;
 
+import com.alibaba.fastjson.JSONObject;
+import com.control.situation.utils.db.TableFieldInfo;
+import com.control.situation.utils.db.TableInfo;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
@@ -28,31 +31,27 @@ public interface CommonDao<T> {
 	 * .not().eq("gender", "F")
 	 * , Student.class);
 	 *
-	 * @param tableName 表名
 	 * @param criteria  查询条件
-	 * @param type      类型
+	 * @param entityClass      类型
 	 * @return 将记录转换成的po类的实例的列表
 	 */
-	List<T> selectByCriteria(String tableName, Criteria criteria, Class<T> type);
+	List<T> selectByCriteria(Criteria criteria, Class<T> entityClass);
 
 	/**
 	 * 查询记录数
 	 *
-	 * @param tableName 表名
 	 * @param criteria  查询条件
 	 * @return 记录数
 	 */
-	long countByCriteria(String tableName, Criteria criteria);
+	Long countByCriteria(Criteria criteria, Class<T> entityClass);
 
 	/**
 	 * 根据主键删除一条记录
 	 *
-	 * @param tableName 表名
-	 * @param pkName    主键字段名
-	 * @param id        主键值
+	 * @param idObj        主键值
 	 * @return 影响行数 0或1
 	 */
-	int removeById(String tableName, String pkName, String id);
+	int removeById(Object idObj, Class<T> entityClass);
 
 	/**
 	 * 保存一个对象为一条数据库记录
@@ -62,19 +61,58 @@ public interface CommonDao<T> {
 	 * @param entity    要保存的对象实体
 	 * @return
 	 */
-	Long insert(T entity);
+	int insert(T entity);
 
 	/**
 	 * 保存一个对象为一条数据库记录
 	 * 如果对象主键不存在，则会新建
 	 * 如果对象主键已经存在，则会更新
 	 *
-	 * @param tableName 表名
-	 * @param pkName    主键字段名
 	 * @param entity    要保存的对象实体
 	 * @return 状态码 OK/ unique 重复错误
 	 */
-	String update(String tableName, String pkName, T entity);
+	int update(T entity);
+
+	/**
+	 * 获取表名
+	 */
+	String getTableName(Class<?> entityClass);
+
+	/**
+	 * 获取主键名
+	 */
+	String getPrimyName(Class<?> entityClass);
+
+	/**
+	 * 获取该表所有字段
+	 * @param entityClass 表实体类
+	 * @return "id,field1,field2,..."
+	 */
+	String getFields(Class<?> entityClass);
+
+	/**
+	 * 获得某表所有字段的注释
+	 * @param tableName 表名
+	 */
+	JSONObject getColumnCommentByTableName(String tableName) throws Exception;
+
+	/**
+	 * 获得数据表字段信息
+	 *
+	 * @param tableName 表名
+	 *  +-----------+----------------+-----------------+------+-----+---------+----------------+---------------------------------+--------------+
+	 *  | Field     | Type           | Collation       | Null | Key | Default | Extra          | Privileges                      | Comment      |
+	 *  +-----------+----------------+-----------------+------+-----+---------+----------------+---------------------------------+--------------+
+	 *  | uid       | bigint(11)     | NULL            | NO   | PRI | NULL    | auto_increment | select,insert,update,references | 用户ID       |
+	 *  | name      | varchar(20)    | utf8_general_ci | YES  |     | NULL    |                | select,insert,update,references | 用户名       |
+	 */
+	List<TableFieldInfo> getFieldInfoByTableName(String tableName) throws Exception;
+
+	/**
+	 * 获取数据库信息
+	 * @param tableName 表名
+	 */
+	TableInfo getTableInfoByTableName(String tableName) throws Exception;
 
 	/**
 	 * 查询条件

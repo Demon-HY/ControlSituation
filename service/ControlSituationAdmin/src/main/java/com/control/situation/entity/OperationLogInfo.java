@@ -21,7 +21,7 @@ public class OperationLogInfo implements Serializable {
 	// 主键
 	@Id
 	@Column(name = "id")
-	private Integer id;
+	private Long id;
 
 	// 日志类型
 	@Column(name = "log_type")
@@ -60,11 +60,11 @@ public class OperationLogInfo implements Serializable {
 
 	public OperationLogInfo(){}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

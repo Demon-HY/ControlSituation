@@ -1,8 +1,11 @@
 package com.control.situation.api.impl;
 
 import com.control.situation.api.RedisApi;
+import com.control.situation.utils.classes.SerializeUtils;
 import com.control.situation.utils.conversion.JsonUtil;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
@@ -45,6 +48,35 @@ public class RedisApiImpl implements RedisApi,Serializable {
             return null;
         }
     }
+
+//    @Override
+//    public boolean setBean(final String key, final Object value, long expire) {
+//        setBean(key, value);
+//        return expire(key, expire);
+//    }
+//
+//    @Override
+//    public boolean setBean(final String key, final Object value) {
+//        return redisTemplate.execute((RedisCallback<Boolean>) connection -> {
+//            RedisSerializer<String> serializer = redisTemplate.getStringSerializer();
+//            connection.set(serializer.serialize(key), SerializeUtils.serialize(value));
+//            return true;
+//        });
+//
+//    }
+
+    @Override
+    public Object getBean(final String key){
+        try {
+            return redisTemplate.execute((RedisCallback<Object>) (RedisConnection connection) -> {
+                RedisSerializer<String> serializer = redisTemplate.getStringSerializer();
+                byte[] value =  connection.get(serializer.serialize(key));
+                return SerializeUtils.unserialize(value);
+            });
+        } catch (Exception e) {
+            return null;
+        }
+    }
   
     @Override  
     public boolean expire(final String key, long expire) {  
@@ -64,8 +96,24 @@ public class RedisApiImpl implements RedisApi,Serializable {
             return JsonUtil.toList(json, clz);
         }  
         return null;  
-    }  
-  
+    }
+
+    @Override
+    public boolean setBean(String key, Object obj, long expire) {
+        String value = JsonUtil.toJson(obj);
+        set(key,value);
+        return expire(key, expire);
+    }
+
+    @Override
+    public <T> T getBean(String key, Class<T> clz) {
+        String json = get(key);
+        if(json!=null){
+            return JsonUtil.toBean(json, clz);
+        }
+        return null;
+    }
+
     @Override  
     public long lpush(final String key, Object obj) {  
         final String value = JsonUtil.toJson(obj);

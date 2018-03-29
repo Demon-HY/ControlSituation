@@ -21,41 +21,40 @@ public class RoleMenuInfo implements Serializable {
 	// 主键
 	@Id
 	@Column(name = "id")
-	private Integer id;
+	private Long id;
 
 	// 菜单ID
 	@Column(name = "menu_id")
-	private Integer menuId;
+	private Long menuId;
 
 	// 角色ID
 	@Column(name = "role_id")
-	private Integer roleId;
+	private Long roleId;
 
 
 	public RoleMenuInfo(){}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public Integer getMenuId() {
+	public Long getMenuId() {
 		return menuId;
 	}
 
-	public void setMenuId(Integer menuId) {
+	public void setMenuId(Long menuId) {
 		this.menuId = menuId;
 	}
 
-	public Integer getRoleId() {
+	public Long getRoleId() {
 		return roleId;
 	}
 
-	public void setRoleId(Integer roleId) {
+	public void setRoleId(Long roleId) {
 		this.roleId = roleId;
 	}
-
 }

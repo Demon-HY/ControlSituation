@@ -16,7 +16,7 @@ public class TableInfo implements Serializable {
 
     private String tableName;
     private String tableComment;
-    private List<com.control.situation.utils.db.TableFieldInfo> listFieldInfos;
+    private List<TableFieldInfo> listFieldInfos;
 
     public String getTableName() {
         return tableName;
@@ -26,7 +26,7 @@ public class TableInfo implements Serializable {
         return tableComment;
     }
 
-    public List<com.control.situation.utils.db.TableFieldInfo> getListFieldInfos() {
+    public List<TableFieldInfo> getListFieldInfos() {
         return listFieldInfos;
     }
 

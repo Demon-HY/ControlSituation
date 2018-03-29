@@ -1,5 +1,7 @@
 package com.control.situation.api;
 
+import org.apache.poi.ss.formula.functions.T;
+
 import java.util.List;
 
 
@@ -14,6 +16,8 @@ public interface RedisApi {
 
     String get(String key);
 
+    Object getBean(String key);
+
     /**
      * 设置 kye 的存活时间，单位秒
      */
@@ -22,6 +26,10 @@ public interface RedisApi {
     <T> boolean setList(String key, List<T> list);
 
     <T> List<T> getList(String key, Class<T> clz);
+
+    boolean setBean(String key, Object obj, long expire);
+
+    <T> T getBean(String key, Class<T> clz);
 
     long lpush(String key, Object obj);
 

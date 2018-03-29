@@ -20,7 +20,7 @@ import java.io.IOException;
 
 @Service
 public class AuthFilter implements Filter {
-	
+
 	private RedisApi redisApi;
 
 	@Override
@@ -35,63 +35,95 @@ public class AuthFilter implements Filter {
 			throws IOException, ServletException {
 		Env env = new Env();
 		ClientResult c = new ClientResult();
-		env.setClientResult(c);
+		env.setCr(c);
 
-		HttpServletRequest request= (HttpServletRequest) servletRequest;
-		HttpServletResponse response=(HttpServletResponse) servletResponse;
+		HttpServletRequest request = (HttpServletRequest) servletRequest;
+		HttpServletResponse response = (HttpServletResponse) servletResponse;
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json; charset=utf-8");
-
 		// 解决跨域问题
-		String originHeader = request.getHeader("Origin");
-		response.setHeader("Access-Control-Allow-Origin", originHeader);
-		response.setHeader("Access-Control-Allow-Methods", "POST, GET");
-		response.setHeader("Access-Control-Allow-Headers", "x-requested-with,content-type");
-
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		// 获取客户端IP
+		env.clientIP = getIpAddr(request);
+		// 请求路径
 		String uri = request.getRequestURI();
 
-		try {
-			request.setAttribute("env", env);
+		// 这样可以在 HttpApi 层获取
+		request.setAttribute("env", env);
 
-			String token = CookieUtils.getCookieValue(request, "token");
-			if (ValidateUtils.notEmpty(token)) {
-				String userId = redisApi.get(token);
-				if (ValidateUtils.isEmpty(userId)) {
-					c.setCode(RetCode.ERR_TOKEN_EXPIRE);
-					JsonUtil.sendJsonResponse(response,c);
-					return;
-				}
-				// token 刷新有效时间
-				redisApi.expire(token, SysContants.COOKIE_EXPIRE);
-				env.setUserId(userId);
-				env.setToken(token);
-			}
-
-			// 不需要验证权限的接口
-			if (uri.equals("/api/auth/checkLogin") || uri.equals("/api/auth/login")) {
-				filterChain.doFilter(servletRequest, servletResponse);
+		String token = CookieUtils.getCookieValue(request, "token");
+		if (ValidateUtils.notEmpty(token)) {
+			String userId = redisApi.get(token);
+			if (ValidateUtils.isEmpty(userId)) {
+				c.setCode(RetCode.ERR_TOKEN_EXPIRE);
+				JsonUtil.sendJsonResponse(response, c);
 				return;
 			}
-
-			if (ValidateUtils.isEmpty(env.getUserId())) {
-				c.setCode(RetCode.ERR_USER_NOT_LOGIN);
-				JsonUtil.sendJsonResponse(response,c);
-				return;
-			}
-
-			filterChain.doFilter(servletRequest, servletResponse);
-		} catch (Exception e) {
-			e.printStackTrace();
-			c.setCode(RetCode.ERR_SERVER_EXCEPTION);
-			try {
-				JsonUtil.sendJsonResponse(response,c);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
+			// token 刷新有效时间
+			redisApi.expire(token, SysContants.COOKIE_EXPIRE);
+			env.userId = userId;
+			env.token = token;
 		}
 
+		// 不需要验证权限的接口
+		if (uri.equals("/api/auth/checkLogin") || uri.equals("/api/auth/login")) {
+			filterChain.doFilter(servletRequest, servletResponse);
+			return;
+		}
+
+		if (ValidateUtils.isEmpty(env.userId)) {
+			c.setCode(RetCode.ERR_USER_NOT_LOGIN);
+			JsonUtil.sendJsonResponse(response, c);
+			return;
+		}
+
+		filterChain.doFilter(servletRequest, servletResponse);
+	}
+
+	/**
+	 * 获取用户真实IP地址，不使用request.getRemoteAddr()的原因是有可能用户使用了代理软件方式避免真实IP地址,
+	 * 可是，如果通过了多级反向代理的话，X-Forwarded-For的值并不止一个，而是一串IP值
+	 *
+	 * @return ip
+	 */
+	private String getIpAddr(HttpServletRequest request) {
+		String ip = request.getHeader("x-forwarded-for");
+		System.out.println("x-forwarded-for ip: " + ip);
+		if (ip != null && ip.length() != 0 && !"unknown".equalsIgnoreCase(ip)) {
+			// 多次反向代理后会有多个ip值，第一个ip才是真实ip
+			if (ip.contains(",")) {
+				ip = ip.split(",")[0];
+			}
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("Proxy-Client-IP");
+			System.out.println("Proxy-Client-IP ip: " + ip);
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("WL-Proxy-Client-IP");
+			System.out.println("WL-Proxy-Client-IP ip: " + ip);
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("HTTP_CLIENT_IP");
+			System.out.println("HTTP_CLIENT_IP ip: " + ip);
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+			System.out.println("HTTP_X_FORWARDED_FOR ip: " + ip);
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("X-Real-IP");
+			System.out.println("X-Real-IP ip: " + ip);
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getRemoteAddr();
+			System.out.println("getRemoteAddr ip: " + ip);
+		}
+		System.out.println("获取客户端ip: " + ip);
+		return ip;
 	}
 
 	@Override
-	public void destroy() {	}
+	public void destroy() {
+	}
 }

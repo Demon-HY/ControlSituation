@@ -11,10 +11,21 @@ import java.io.Serializable;
  */
 public class Env implements Serializable {
 
-	private String userId; // 用户唯一标识
-	private String token;
+	/**
+	 * 用户ID
+	 */
+	public String userId; // 用户唯一标识
+	/**
+	 * 用户登录凭证
+	 */
+	public String token;
+	/**
+	 * 客户端IP
+	 */
+	public String clientIP;
 
-	private ClientResult clientResult; // 客户端返回数据
+
+	public ClientResult cr; // 客户端返回数据
 
 	/**
 	 * 获取用户唯一标识
@@ -38,11 +49,19 @@ public class Env implements Serializable {
 		this.userId = userId;
 	}
 
-	public ClientResult getClientResult() {
-		return clientResult;
+	public ClientResult getCr() {
+		return cr;
 	}
 
-	public void setClientResult(ClientResult clientResult) {
-		this.clientResult = clientResult;
+	public void setCr(ClientResult cr) {
+		this.cr = cr;
+	}
+
+	public String getClientIP() {
+		return clientIP;
+	}
+
+	public void setClientIP(String clientIP) {
+		this.clientIP = clientIP;
 	}
 }

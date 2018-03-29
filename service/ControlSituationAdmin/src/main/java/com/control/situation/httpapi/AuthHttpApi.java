@@ -39,16 +39,14 @@ public class AuthHttpApi {
 	@RequestMapping("/checkLogin")
 	public ClientResult checkLogin(HttpServletRequest req) {
 		Env env = (Env) req.getAttribute("env");
-		ClientResult c = env.getClientResult();
+		ClientResult c = env.getCr();
 
 		if (ValidateUtils.isEmpty(env.getUserId())) {
-			return c.setCode(RetCode.ERR_USER_NOT_LOGIN)
-					.setMessage("请登录");
+			return c.setCode(RetCode.ERR_USER_NOT_LOGIN);
 		}
 		String token = redisApi.get(env.getUserId());
 		if (ValidateUtils.isEmpty(token)) {
-			return c.setCode(RetCode.ERR_TOKEN_EXPIRE)
-					.setMessage("登录信息失效");
+			return c.setCode(RetCode.ERR_TOKEN_EXPIRE);
 		}
 		// token 刷新有效时间
 		redisApi.expire(token, 30 * 60);
@@ -63,7 +61,7 @@ public class AuthHttpApi {
 	public ClientResult login(HttpServletRequest req, HttpServletResponse resp,
 	                          String account, String password) {
 		Env env = (Env) req.getAttribute("env");
-		ClientResult c = env.getClientResult();
+		ClientResult c = env.getCr();
 
 		if (ValidateUtils.isEmpty(account) || ValidateUtils.isEmpty(password)) {
 			return c.setCode(RetCode.ERR_BAD_PARAMS);
@@ -73,6 +71,7 @@ public class AuthHttpApi {
 		if (!c.getCode().equals(RetCode.OK)) {
 			return c;
 		}
+
 		UserInfo user = (UserInfo) c.getResult();
 		// 创建用户唯一标识
 		String token = RandomUtil.getRequestId();

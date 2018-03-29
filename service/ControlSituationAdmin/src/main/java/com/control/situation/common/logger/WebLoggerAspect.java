@@ -1,4 +1,4 @@
-package com.control.situation.logger;
+package com.control.situation.common.logger;
 
 import com.alibaba.fastjson.JSONObject;
 import com.control.situation.utils.conversion.JsonUtil;
@@ -51,9 +51,6 @@ public class WebLoggerAspect {
 		HttpServletRequest request = attributes.getRequest();
 		// 记录下请求内容
 		String url = request.getRequestURL().toString();
-		if (ValidateUtils.notEmpty(url) && url.contains("hello")) { // 屏蔽阿里的健康检查
-			return;
-		}
 		String httpMethod = request.getMethod();
 		JSONObject obj = new JSONObject(); // 请求参数
 		//获取所有参数
@@ -78,10 +75,6 @@ public class WebLoggerAspect {
 
 		String resultObj = "";
 		try {
-			if (ValidateUtils.notEmpty(url) && url.contains("hello")) { // 屏蔽阿里的健康检查
-				return;
-			}
-
 			resultObj = JsonUtil.convertToJSON(result);
 			resultObj = resultObj.length() > 1024 ? resultObj.substring(0, 1024) : resultObj;
 		} catch (Exception e) {

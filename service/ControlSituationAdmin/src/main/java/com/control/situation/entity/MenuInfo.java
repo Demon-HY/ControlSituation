@@ -21,11 +21,11 @@ public class MenuInfo implements Serializable {
 	// 菜单ID
 	@Id
 	@Column(name = "id")
-	private Integer id;
+	private Long id;
 
 	// 菜单父编号
 	@Column(name = "pid")
-	private Integer pid;
+	private Long pid;
 
 	// 当前菜单的所有父菜单编号
 	@Column(name = "pids")
@@ -86,19 +86,19 @@ public class MenuInfo implements Serializable {
 
 	public MenuInfo(){}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public Integer getPid() {
+	public Long getPid() {
 		return pid;
 	}
 
-	public void setPid(Integer pid) {
+	public void setPid(Long pid) {
 		this.pid = pid;
 	}
 
