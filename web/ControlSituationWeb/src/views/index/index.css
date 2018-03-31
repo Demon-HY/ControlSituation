@@ -1,0 +1,45 @@
+/*头部*/
+.el-header {
+  color: #333;
+  line-height: 60px;
+  height: 60px;
+  padding: 0;
+}
+.el-col-5 {
+  width: 355px;
+}
+.logo {
+  background-color: #1c2b36;
+  height: 60px;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 50px;
+  color: #c4d0d9 !important;
+  padding-left: 10px;
+}
+/*一级菜单*/
+.first_menu {
+  margin-right: 20px;
+  font-size: 20px;
+}
+.ei-fullscreen {
+  font-size: 45px;
+  color: #000;
+}
+.el-menu-user {
+  width: 100px;
+}
+
+/*侧边栏*/
+.el-aside {
+  background-color: #1c2b36;
+  color: #7793a7;
+  text-align: center;
+  height: 100vh;
+}
+
+/*正文内容*/
+.el-main {
+  text-align: center;
+  height: 100vh;
+}
