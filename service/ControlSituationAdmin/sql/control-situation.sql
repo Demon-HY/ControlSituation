@@ -51,7 +51,6 @@ CREATE TABLE `menu` (
   `pid` int(6) NOT NULL COMMENT '菜单父编号',
   `pids` varchar(128) NOT NULL DEFAULT '' COMMENT '当前菜单的所有父菜单编号',
   `name` varchar(32) NOT NULL DEFAULT '' COMMENT '菜单名称',
-  `icon` varchar(32) NOT NULL DEFAULT '' COMMENT '菜单图标',
   `url` varchar(128) NOT NULL DEFAULT '' COMMENT 'url地址',
   `sort` int(4) NOT NULL COMMENT '菜单排序值',
   `level` tinyint(1) NOT NULL COMMENT '菜单层级,(接口没有层级)',

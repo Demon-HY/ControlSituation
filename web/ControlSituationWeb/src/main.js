@@ -10,6 +10,8 @@ import 'element-ui/lib/theme-chalk/index.css'
 import store from './store/store'
 import '../static/css/main.css'
 import '@/utils/element-init'
+// 引入图标库
+import './assets/icon/iconfont.css'
 
 Vue.use(Vuex);
 

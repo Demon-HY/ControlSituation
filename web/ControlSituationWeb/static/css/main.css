@@ -17,8 +17,8 @@ body {
 a {
   text-decoration:none;
 }
-body, input {
-  color: #777;
+body{
+  color: #FFF;
 }
 
 /* 公用属性 */
@@ -42,11 +42,11 @@ body, input {
   *zoom: 1;
 }
 
-.fl {
+.float-left {
   display: inline;
   float: left;
 }
-.fr {
+.float-right {
   display: inline;
   float: right;
 }
@@ -55,4 +55,20 @@ body, input {
 }
 .hidden {
   overflow: hidden;
+}
+
+/*居中*/
+.content {
+  margin: 0 auto;
+}
+
+/*图标*/
+.icon_lists .icon {
+  font-size: 42px;
+  line-height: 100px;
+  margin: 10px 0;
+  color: #333;
+  -webkit-transition: font-size 0.25s ease-out 0s;
+  -moz-transition: font-size 0.25s ease-out 0s;
+  transition: font-size 0.25s ease-out 0s;
 }
