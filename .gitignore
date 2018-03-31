@@ -4,8 +4,7 @@
 
 /ControlSituationParent/.idea/*
 /ControlSituationAdmin/.idea/*
-/ControlSituationAdmin/target
-/ControlSituationParent/target
+/service/ControlSituationAdmin/target
 */target/*
 /service/ControlSituationAdmin/.idea
 target
