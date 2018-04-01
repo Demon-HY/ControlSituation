@@ -85,17 +85,45 @@
         }, {
           id: 2,
           pid: 0,
-          name: '订单管理',
-          url: '/order',
+          name: '系统配置',
+          url: '/system',
           sort: 0,
           level: 1,
-          is_children: 0,
+          is_children: 1,
           menu: 1,
           enable: 1,
           open: 1,
           create_time: '2018-3-31 18:31:25',
           update_time: '2018-3-31 18:31:25',
-          childrens: []
+          childrens: [{
+            id: 3,
+            pid: 2,
+            name: '菜单管理',
+            url: '/menu',
+            sort: 1,
+            level: 2,
+            is_children: 1,
+            menu: 1,
+            enable: 1,
+            open: 0,
+            create_time: '2018-3-31 18:31:25',
+            update_time: '2018-3-31 18:31:25',
+            childrens: []
+          }, {
+            id: 4,
+            pid: 2,
+            name: '用户管理',
+            url: '/user',
+            sort: 1,
+            level: 2,
+            is_children: 1,
+            menu: 1,
+            enable: 1,
+            open: 0,
+            create_time: '2018-3-31 18:31:25',
+            update_time: '2018-3-31 18:31:25',
+            childrens: []
+          }]
         }]
       }
     },
@@ -120,11 +148,11 @@
         else {
           let docElm = document.documentElement;
           //FireFox
-          if(docElm.mozRequestFullScreen) docElm.mozRequestFullScreen();
+          if (docElm.mozRequestFullScreen) docElm.mozRequestFullScreen();
           //Chrome等
-          else if(docElm.webkitRequestFullScreen) docElm.webkitRequestFullScreen();
+          else if (docElm.webkitRequestFullScreen) docElm.webkitRequestFullScreen();
           //IE11
-          else if(elem.msRequestFullscreen) elem.msRequestFullscreen();
+          else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
 
           this.isFull = true;
         }

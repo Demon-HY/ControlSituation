@@ -43,8 +43,7 @@ http.interceptors.response.use(resp => {
   },
   error => {
     console.log(error);
-    this.prototype.$message.error('test');
-    Vue.prototype.$message.error('error');
+    Vue.prototype.$message.error(error.toString());
     return Promise.reject(error);
   }
 );

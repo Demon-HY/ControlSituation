@@ -30,7 +30,7 @@
 
 <script>
 
-  import {login, checkLogin} from '@/api/user/login_api'
+  import {login, checkLogin} from '@/api/user/auth_api'
 
   export default {
     name: 'login',
