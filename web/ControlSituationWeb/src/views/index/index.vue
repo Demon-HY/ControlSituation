@@ -85,7 +85,7 @@
         }, {
           id: 2,
           pid: 0,
-          name: '系统配置',
+          name: '系统管理',
           url: '/system',
           sort: 0,
           level: 1,

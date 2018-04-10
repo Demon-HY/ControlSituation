@@ -5,7 +5,7 @@ import http from '../../utils/axios-config'
  * @returns {*}
  */
 export function checkLogin() {
-  return http.post('/api/auth/checkLogin', {})
+  return http.post('/api/auth/checkLogin.do', {})
 }
 
 /**
@@ -15,11 +15,13 @@ export function checkLogin() {
  * @returns {Promise<T> | *}
  */
 export function login(account, password) {
-  return http.post( '/api/auth/login', {
+  return http.post( '/api/auth/login.do', {
     account: account,
     password: password
-  }, data => {
+  }).then(data => {
     console.log(data);
+  }).catch(e => {
+    console.log(e);
   });
 }
 

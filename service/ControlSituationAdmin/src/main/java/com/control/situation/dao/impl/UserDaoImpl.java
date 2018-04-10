@@ -1,5 +1,6 @@
 package com.control.situation.dao.impl;
 
+import com.control.situation.common.jdbc.CommonDao;
 import com.control.situation.common.jdbc.CommonDaoImpl;
 import com.control.situation.dao.UserDao;
 import com.control.situation.entity.UserInfo;
@@ -21,6 +22,8 @@ public class UserDaoImpl extends CommonDaoImpl<UserInfo> implements UserDao {
 
 	@Override
 	public UserInfo findByAccount(String account) {
-		return null;
+        CommonDao.Criteria criteria = this.createCriteria();
+        criteria.eq("account", account);
+        return selectOneByCriteria(criteria, UserInfo.class);
 	}
 }

@@ -17,6 +17,11 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class AuthFilter implements Filter {
@@ -42,18 +47,39 @@ public class AuthFilter implements Filter {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json; charset=utf-8");
 		// 解决跨域问题
-		response.setHeader("Access-Control-Allow-Origin", "*");
-		// 获取客户端IP
-		env.clientIP = getIpAddr(request);
+        String[] origin = {"http://localhost:8080"};
+        Set allowedOrigins= new HashSet(Arrays.asList(origin));
+        String originHeader= request.getHeader("Origin");
+        if (allowedOrigins.contains(originHeader)){
+            response.setHeader("Access-Control-Allow-Origin", originHeader);
+            response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+            response.setHeader("Access-Control-Max-Age", "3600");
+            // 如果要把Cookie发到服务器，需要指定Access-Control-Allow-Credentials字段为true;
+            response.setHeader("Access-Control-Allow-Credentials", "true");
+            response.setHeader("XDomainRequestAllowed","1");
+            response.setHeader("Access-Control-Allow-Headers", "Origin, No-Cache, X-Requested-With, If-Modified-Since," +
+                    "Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With,userId,token");//表明服务器支持的所有头信息字段
+        }
 		// 请求路径
 		String uri = request.getRequestURI();
+		String token = CookieUtils.getCookieValue(request, "token");
+
+		// 获取客户端IP
+		env.clientIP = getIpAddr(request);
+		env.token = token;
 
 		// 这样可以在 HttpApi 层获取
 		request.setAttribute("env", env);
 
-		String token = CookieUtils.getCookieValue(request, "token");
+		// 不需要验证权限的接口
+		if (uri.equals("/api/auth/checkLogin.do") || uri.equals("/api/auth/login.do")) {
+			filterChain.doFilter(servletRequest, servletResponse);
+			return;
+		}
+
 		if (ValidateUtils.notEmpty(token)) {
 			String userId = redisApi.get(token);
+			// token失效
 			if (ValidateUtils.isEmpty(userId)) {
 				c.setCode(RetCode.ERR_TOKEN_EXPIRE);
 				JsonUtil.sendJsonResponse(response, c);
@@ -61,14 +87,8 @@ public class AuthFilter implements Filter {
 			}
 			// token 刷新有效时间
 			redisApi.expire(token, SysContants.COOKIE_EXPIRE);
-			env.userId = userId;
+			env.userId = Long.valueOf(userId);
 			env.token = token;
-		}
-
-		// 不需要验证权限的接口
-		if (uri.equals("/api/auth/checkLogin") || uri.equals("/api/auth/login")) {
-			filterChain.doFilter(servletRequest, servletResponse);
-			return;
 		}
 
 		if (ValidateUtils.isEmpty(env.userId)) {
@@ -87,40 +107,39 @@ public class AuthFilter implements Filter {
 	 * @return ip
 	 */
 	private String getIpAddr(HttpServletRequest request) {
-		String ip = request.getHeader("x-forwarded-for");
-		System.out.println("x-forwarded-for ip: " + ip);
-		if (ip != null && ip.length() != 0 && !"unknown".equalsIgnoreCase(ip)) {
-			// 多次反向代理后会有多个ip值，第一个ip才是真实ip
-			if (ip.contains(",")) {
-				ip = ip.split(",")[0];
-			}
-		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getHeader("Proxy-Client-IP");
-			System.out.println("Proxy-Client-IP ip: " + ip);
-		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getHeader("WL-Proxy-Client-IP");
-			System.out.println("WL-Proxy-Client-IP ip: " + ip);
-		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getHeader("HTTP_CLIENT_IP");
-			System.out.println("HTTP_CLIENT_IP ip: " + ip);
-		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getHeader("HTTP_X_FORWARDED_FOR");
-			System.out.println("HTTP_X_FORWARDED_FOR ip: " + ip);
-		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getHeader("X-Real-IP");
-			System.out.println("X-Real-IP ip: " + ip);
-		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getRemoteAddr();
-			System.out.println("getRemoteAddr ip: " + ip);
-		}
-		System.out.println("获取客户端ip: " + ip);
-		return ip;
+        String ipAddress;
+        try {
+            ipAddress = request.getHeader("x-forwarded-for");
+            if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {
+                ipAddress = request.getHeader("Proxy-Client-IP");
+            }
+            if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {
+                ipAddress = request.getHeader("WL-Proxy-Client-IP");
+            }
+            if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {
+                ipAddress = request.getRemoteAddr();
+                if (ipAddress.equals("127.0.0.1")) {
+                    // 根据网卡取本机配置的IP
+                    InetAddress inet = null;
+                    try {
+                        inet = InetAddress.getLocalHost();
+                    } catch (UnknownHostException e) {
+                        e.printStackTrace();
+                    }
+                    assert inet != null;
+                    ipAddress = inet.getHostAddress();
+                }
+            }
+            // 对于通过多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割
+            if (ipAddress != null && ipAddress.length() > 15) { // "***.***.***.***".length()
+                if (ipAddress.indexOf(",") > 0) {
+                    ipAddress = ipAddress.substring(0, ipAddress.indexOf(","));
+                }
+            }
+        } catch (Exception e) {
+            ipAddress="";
+        }
+        return ipAddress;
 	}
 
 	@Override

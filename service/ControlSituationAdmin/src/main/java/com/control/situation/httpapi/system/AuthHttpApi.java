@@ -1,4 +1,4 @@
-package com.control.situation.httpapi;
+package com.control.situation.httpapi.system;
 
 import com.control.situation.api.AuthApi;
 import com.control.situation.api.RedisApi;
@@ -36,20 +36,21 @@ public class AuthHttpApi {
 	/**
 	 * 验证登录
 	 */
-	@RequestMapping("/checkLogin")
+	@RequestMapping("/checkLogin.do")
 	public ClientResult checkLogin(HttpServletRequest req) {
 		Env env = (Env) req.getAttribute("env");
 		ClientResult c = env.getCr();
 
-		if (ValidateUtils.isEmpty(env.getUserId())) {
+		if (ValidateUtils.isEmpty(env.token)) {
 			return c.setCode(RetCode.ERR_USER_NOT_LOGIN);
 		}
-		String token = redisApi.get(env.getUserId());
-		if (ValidateUtils.isEmpty(token)) {
+		String userId = redisApi.get(env.token);
+		if (ValidateUtils.isEmpty(userId)) {
 			return c.setCode(RetCode.ERR_TOKEN_EXPIRE);
 		}
+
 		// token 刷新有效时间
-		redisApi.expire(token, 30 * 60);
+		redisApi.expire(env.token, 30 * 60);
 
 		return c.setCode(RetCode.OK);
 	}
@@ -57,7 +58,7 @@ public class AuthHttpApi {
 	/**
 	 * 登录
 	 */
-	@RequestMapping("/login")
+	@RequestMapping("/login.do")
 	public ClientResult login(HttpServletRequest req, HttpServletResponse resp,
 	                          String account, String password) {
 		Env env = (Env) req.getAttribute("env");

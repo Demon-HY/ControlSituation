@@ -14,7 +14,7 @@ public class Env implements Serializable {
 	/**
 	 * 用户ID
 	 */
-	public String userId; // 用户唯一标识
+	public Long userId; // 用户唯一标识
 	/**
 	 * 用户登录凭证
 	 */
@@ -41,11 +41,11 @@ public class Env implements Serializable {
 	/**
 	 * 获取用户 ID
 	 */
-	public String getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 

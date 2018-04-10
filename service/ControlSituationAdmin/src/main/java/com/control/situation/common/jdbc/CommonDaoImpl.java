@@ -83,6 +83,23 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 		return getJdbcTemplate().query(sql.toString(), new BeanPropertyRowMapper(entityClass), params);
 	}
 
+    @Override
+    public T selectOneByCriteria(CommonDao.Criteria criteria, Class<T> entityClass) {
+        StringBuilder sql = getSelectFrom(entityClass);
+        if (sql == null) return null;
+        sql.append(criteria.getCriteriaSQL());
+        if (debug) {
+            System.out.println(sql.toString()); return null;
+        }
+
+        Object[] params = criteria.getParam().toArray(new Object[criteria.getParam().size()]);
+        List<T> list = getJdbcTemplate().query(sql.toString(), new BeanPropertyRowMapper(entityClass), params);
+        if (ValidateUtils.isEmpty(list) || list.size() != 1) {
+            return null;
+        }
+        return list.get(0);
+    }
+
 	@Override
 	public Long countByCriteria(CommonDao.Criteria criteria, Class<T> entityClass) {
 		String sql = "SELECT COUNT(1) AS num FROM " + getTableName(entityClass) + criteria.getCriteriaSQL();
@@ -112,21 +129,36 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 
 	@Override
 	public int insert(T entity) {
+		Field[] fields = entity.getClass().getDeclaredFields();
 		Map<String, Object> obj = MapUtils.objectToMap(entity);
+
 		StringBuilder sql1 = new StringBuilder("INSERT INTO ")
 				.append(getTableName(entity.getClass()))
 				.append(" (");
 		StringBuilder sql2 = new StringBuilder(" VALUES(");
 		List<Object> args = new ArrayList<>();
 
-		for (String key : obj.keySet()) {
+		for (Field field : fields) {
+			if (field.getAnnotation(Column.class) == null) continue;
+
+			String key = field.getName();
+			String name = field.getAnnotation(Column.class).name();
 			Object arg = obj.get(key);
 			if (ValidateUtils.isEmpty(arg)) continue;
 
-			sql1.append(key).append(",");
+			sql1.append(name).append(",");
 			sql2.append("?,");
 			args.add(arg);
 		}
+
+//		for (String key : obj.keySet()) {
+//			Object arg = obj.get(key);
+//			if (ValidateUtils.isEmpty(arg)) continue;
+//
+//			sql1.append(key).append(",");
+//			sql2.append("?,");
+//			args.add(arg);
+//		}
 		sql1.deleteCharAt(sql1.length() - 1);
 		sql1.append(") ");
 		sql2.deleteCharAt(sql2.length() - 1);

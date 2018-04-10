@@ -53,7 +53,7 @@ CREATE TABLE `menu` (
   `name` varchar(32) NOT NULL DEFAULT '' COMMENT '菜单名称',
   `url` varchar(128) NOT NULL DEFAULT '' COMMENT 'url地址',
   `sort` int(4) NOT NULL COMMENT '菜单排序值',
-  `level` tinyint(1) NOT NULL COMMENT '菜单层级,(接口没有层级)',
+  `level` tinyint(1) NOT NULL COMMENT '菜单层级,(接口和菜单同层)',
   `is_children` tinyint(1) NOT NULL COMMENT '是否有子节点',
   `menu` tinyint(1) NOT NULL COMMENT '是否是菜单：1-是，0-不是(接口路由)',
   `enable` tinyint(1) NOT NULL COMMENT '菜单状态：1-启用，0-不启用',

@@ -1,6 +1,6 @@
-package com.control.situation.httpapi;
+package com.control.situation.httpapi.system;
 
-import com.control.situation.api.MenuApi;
+import com.control.situation.api.RoleApi;
 import com.control.situation.config.Env;
 import com.control.situation.utils.returns.ClientResult;
 import org.apache.log4j.Logger;
@@ -11,51 +11,51 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Menu 访问层
+ * Role 访问层
  * @author Demon-Coffee
  * @since 1.0
  */
 @RestController
-@RequestMapping("/api/menu")
-public class MenuHttpApi {
+@RequestMapping("/api/role")
+public class RoleHttpApi {
 
-	private Logger logger = Logger.getLogger(MenuHttpApi.class);
+	private Logger logger = Logger.getLogger(RoleHttpApi.class);
 
 	@Autowired
-	private MenuApi menuApi;
+	private RoleApi roleApi;
 
 	@RequestMapping("findList")
 	public ClientResult findList(HttpServletRequest req) {
 		Env env = (Env) req.getAttribute("env");
-		ClientResult clientResult = menuApi.findList(env);
+		ClientResult clientResult = roleApi.findList(env);
 		return clientResult;
 	}
 
 	@RequestMapping("findDetail")
 	public ClientResult findDetail(HttpServletRequest req){
 		Env env = (Env) req.getAttribute("env");
-		ClientResult clientResult = menuApi.findDetail(env);
+		ClientResult clientResult = roleApi.findDetail(env);
 		return clientResult;
 	}
 
 	@RequestMapping("save")
 	public ClientResult save(HttpServletRequest req){
 		Env env = (Env) req.getAttribute("env");
-		ClientResult clientResult = menuApi.save(env);
+		ClientResult clientResult = roleApi.save(env);
 		return clientResult;
 	}
 
 	@RequestMapping("delete")
 	public ClientResult delete(HttpServletRequest req){
 		Env env = (Env) req.getAttribute("env");
-		ClientResult clientResult = menuApi.delete(env);
+		ClientResult clientResult = roleApi.delete(env);
 		return clientResult;
 	}
 
 	@RequestMapping("update")
 	public ClientResult update(HttpServletRequest req){
 		Env env = (Env) req.getAttribute("env");
-		ClientResult clientResult = menuApi.update(env);
+		ClientResult clientResult = roleApi.update(env);
 		return clientResult;
 	}
 }

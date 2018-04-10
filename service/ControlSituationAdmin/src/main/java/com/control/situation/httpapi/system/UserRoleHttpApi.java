@@ -1,6 +1,6 @@
-package com.control.situation.httpapi;
+package com.control.situation.httpapi.system;
 
-import com.control.situation.api.OperationLogApi;
+import com.control.situation.api.UserRoleApi;
 import com.control.situation.config.Env;
 import com.control.situation.utils.returns.ClientResult;
 import org.apache.log4j.Logger;
@@ -11,51 +11,51 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * OperationLog 访问层
+ * UserRole 访问层
  * @author Demon-Coffee
  * @since 1.0
  */
 @RestController
-@RequestMapping("/api/operationLog")
-public class OperationLogHttpApi {
+@RequestMapping("/api/userRole")
+public class UserRoleHttpApi {
 
-	private Logger logger = Logger.getLogger(OperationLogHttpApi.class);
+	private Logger logger = Logger.getLogger(UserRoleHttpApi.class);
 
 	@Autowired
-	private OperationLogApi operationLogApi;
+	private UserRoleApi userRoleApi;
 
 	@RequestMapping("findList")
 	public ClientResult findList(HttpServletRequest req) {
 		Env env = (Env) req.getAttribute("env");
-		ClientResult clientResult = operationLogApi.findList(env);
+		ClientResult clientResult = userRoleApi.findList(env);
 		return clientResult;
 	}
 
 	@RequestMapping("findDetail")
 	public ClientResult findDetail(HttpServletRequest req){
 		Env env = (Env) req.getAttribute("env");
-		ClientResult clientResult = operationLogApi.findDetail(env);
+		ClientResult clientResult = userRoleApi.findDetail(env);
 		return clientResult;
 	}
 
 	@RequestMapping("save")
 	public ClientResult save(HttpServletRequest req){
 		Env env = (Env) req.getAttribute("env");
-		ClientResult clientResult = operationLogApi.save(env);
+		ClientResult clientResult = userRoleApi.save(env);
 		return clientResult;
 	}
 
 	@RequestMapping("delete")
 	public ClientResult delete(HttpServletRequest req){
 		Env env = (Env) req.getAttribute("env");
-		ClientResult clientResult = operationLogApi.delete(env);
+		ClientResult clientResult = userRoleApi.delete(env);
 		return clientResult;
 	}
 
 	@RequestMapping("update")
 	public ClientResult update(HttpServletRequest req){
 		Env env = (Env) req.getAttribute("env");
-		ClientResult clientResult = operationLogApi.update(env);
+		ClientResult clientResult = userRoleApi.update(env);
 		return clientResult;
 	}
 }

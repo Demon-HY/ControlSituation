@@ -1,6 +1,6 @@
-package com.control.situation.httpapi;
+package com.control.situation.httpapi.system;
 
-import com.control.situation.api.UserApi;
+import com.control.situation.api.RoleMenuApi;
 import com.control.situation.config.Env;
 import com.control.situation.utils.returns.ClientResult;
 import org.apache.log4j.Logger;
@@ -11,51 +11,51 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * User 访问层
+ * RoleMenu 访问层
  * @author Demon-Coffee
  * @since 1.0
  */
 @RestController
-@RequestMapping("/api/user")
-public class UserHttpApi {
+@RequestMapping("/api/roleMenu")
+public class RoleMenuHttpApi {
 
-	private Logger logger = Logger.getLogger(UserHttpApi.class);
+	private Logger logger = Logger.getLogger(RoleMenuHttpApi.class);
 
 	@Autowired
-	private UserApi userApi;
+	private RoleMenuApi roleMenuApi;
 
 	@RequestMapping("findList")
 	public ClientResult findList(HttpServletRequest req) {
 		Env env = (Env) req.getAttribute("env");
-		ClientResult clientResult = userApi.findList(env);
+		ClientResult clientResult = roleMenuApi.findList(env);
 		return clientResult;
 	}
 
 	@RequestMapping("findDetail")
 	public ClientResult findDetail(HttpServletRequest req){
 		Env env = (Env) req.getAttribute("env");
-		ClientResult clientResult = userApi.findDetail(env);
+		ClientResult clientResult = roleMenuApi.findDetail(env);
 		return clientResult;
 	}
 
 	@RequestMapping("save")
 	public ClientResult save(HttpServletRequest req){
 		Env env = (Env) req.getAttribute("env");
-		ClientResult clientResult = userApi.save(env);
+		ClientResult clientResult = roleMenuApi.save(env);
 		return clientResult;
 	}
 
 	@RequestMapping("delete")
 	public ClientResult delete(HttpServletRequest req){
 		Env env = (Env) req.getAttribute("env");
-		ClientResult clientResult = userApi.delete(env);
+		ClientResult clientResult = roleMenuApi.delete(env);
 		return clientResult;
 	}
 
 	@RequestMapping("update")
 	public ClientResult update(HttpServletRequest req){
 		Env env = (Env) req.getAttribute("env");
-		ClientResult clientResult = userApi.update(env);
+		ClientResult clientResult = roleMenuApi.update(env);
 		return clientResult;
 	}
 }

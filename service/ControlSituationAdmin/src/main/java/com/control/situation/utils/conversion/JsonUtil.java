@@ -99,7 +99,6 @@ public class JsonUtil {
              response.setHeader("Access-Control-Max-Age", "3600");
              response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
              // 声明接受所有域的请求
-             response.setHeader("Access-Control-Allow-Origin", "*");
              PrintWriter out = response.getWriter();
              response.getWriter().print(convertToJSON(obj));
              out.flush();

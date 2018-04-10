@@ -1,9 +1,8 @@
-package com.control.situation.common.logger;
+package com.control.situation.intercepts.logger;
 
 import com.alibaba.fastjson.JSONObject;
 import com.control.situation.utils.conversion.JsonUtil;
 import com.control.situation.utils.RandomUtil;
-import com.control.situation.utils.ValidateUtils;
 import org.apache.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -28,9 +27,9 @@ import java.util.Enumeration;
  */
 @Aspect
 @Component
-public class WebLoggerAspect {
+public class WebLoggerIntercept {
 
-	private Logger logger = Logger.getLogger(WebLoggerAspect.class);
+	private Logger logger = Logger.getLogger(WebLoggerIntercept.class);
 
 	// 记录一个全局的唯一标识，可以通过它找到请求和响应,该值会被写入 Response 的头部，RequestId
 	private ThreadLocal<String> requestCode = new ThreadLocal<>();

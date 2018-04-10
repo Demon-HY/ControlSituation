@@ -66,12 +66,14 @@ public class InitUser {
 	            userDao.insert(user);
 	            System.out.println(String.format("User %s created.", account));
 
-	            // 设置用户角色
-	            // 检查默认角色是否已创建
+	            // 获取用户 ID
+                user = userDao.findByAccount(account);
+                // 设置用户角色
+                // 检查默认角色是否已创建
                 RoleInfo role = roleDao.findByRoleName(attrs.getString("role"));
-	            if (ValidateUtils.isEmpty(role)) {
-		            throw new LogicalException("INIT_ERROR", "Please create role...");
-	            }
+                if (ValidateUtils.isEmpty(role)) {
+                    throw new LogicalException("INIT_ERROR", "Please create role...");
+                }
 	            UserRoleInfo userRoleInfo = new UserRoleInfo();
 	            userRoleInfo.setUserId(user.getId());
 	            userRoleInfo.setRoleId(role.getId());
