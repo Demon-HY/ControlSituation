@@ -18,4 +18,10 @@ public interface AuthApi {
 	 * @return 用户信息
 	 */
 	ClientResult login(Env env, String account, String password);
+
+    /**
+     * 退出登录
+     * @param env 上下文变量
+     */
+    void logout(Env env);
 }

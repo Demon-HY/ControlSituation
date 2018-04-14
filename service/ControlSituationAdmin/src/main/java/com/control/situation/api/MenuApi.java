@@ -11,6 +11,11 @@ import com.control.situation.utils.returns.ClientResult;
  */
 public interface MenuApi {
 
+    /**
+     * 获取用户所拥有的所有菜单权限
+     * @param env
+     * @return
+     */
 	ClientResult findList(Env env);
 
 	ClientResult update(Env env);

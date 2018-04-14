@@ -33,7 +33,7 @@ public class AuthApiImpl implements AuthApi {
 	public ClientResult login(Env env, String account, String password) {
 		ClientResult c = env.getCr();
 
-		// 登录前事件
+		// TODO 登录前事件
 
 		// 检查用户是否存在
 		UserInfo userInfo = userDao.findByAccount(account);
@@ -58,17 +58,22 @@ public class AuthApiImpl implements AuthApi {
 		// 将信息存入 redis
 		LoginInfo loginInfo = new LoginInfo();
 		loginInfo.setTokenInfo(tokenInfo);
+		userInfo.setPassword("");
 		loginInfo.setUserInfo(userInfo);
 
 		// 目前可以不用这么复杂，直接通过 token 保存一个 userId 就可以了
-//		redisApi.setBean(tokenInfo.token, loginInfo, SysContants.COOKIE_EXPIRE);
 		redisApi.set(tokenInfo.token, userInfo.getId().toString(), COOKIE_EXPIRE);
-		// 这里通过用户ID记录token，是为了方便用户权限变更后及时更新用户数据，而不需要重新登录，
-		// 并且可以防止多地登陆
+		// 这里通过用户ID记录token，是为了方便用户权限变更后及时更新用户数据，而不需要重新登录
 		redisApi.set(String.format("%d_token", userInfo.getId()), tokenInfo.token, COOKIE_EXPIRE);
 
-		// 登录后事件
+		// TODO 登录后事件
 
-		return c.setResult(userInfo);
+		return c.setResult(loginInfo);
 	}
+
+    @Override
+    public void logout(Env env) {
+        redisApi.del(env.token);
+        redisApi.del(String.format("%d_token", env.userId));
+    }
 }

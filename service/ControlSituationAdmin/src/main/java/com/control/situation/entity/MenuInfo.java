@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Demon-Coffee
@@ -21,11 +22,11 @@ public class MenuInfo implements Serializable {
 	// 菜单ID
 	@Id
 	@Column(name = "id")
-	private Long id;
+	private Integer id;
 
 	// 菜单父编号
 	@Column(name = "pid")
-	private Long pid;
+	private Integer pid;
 
 	// 当前菜单的所有父菜单编号
 	@Column(name = "pids")
@@ -34,10 +35,6 @@ public class MenuInfo implements Serializable {
 	// 菜单名称
 	@Column(name = "name")
 	private String name;
-
-	// 菜单图标
-	@Column(name = "icon")
-	private String icon;
 
 	// url地址
 	@Column(name = "url")
@@ -49,23 +46,23 @@ public class MenuInfo implements Serializable {
 
 	// 菜单层级,(接口没有层级)
 	@Column(name = "level")
-	private Boolean level;
+	private Integer level;
 
 	// 是否有子节点
 	@Column(name = "is_children")
-	private Boolean isChildren;
+	private Integer isChildren;
 
 	// 是否是菜单：1-是，0-不是(接口路由)
 	@Column(name = "menu")
-	private Boolean menu;
+	private Integer menu;
 
 	// 菜单状态：1-启用，0-不启用
 	@Column(name = "enable")
-	private Boolean enable;
+	private Integer enable;
 
 	// 是否展开：1-打开，0-不打开
 	@Column(name = "open")
-	private Boolean open;
+	private Integer open;
 
 	// 创建时间
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -83,22 +80,26 @@ public class MenuInfo implements Serializable {
 	@Column(name = "remark")
 	private String remark;
 
+    /**
+     * 子菜单
+     */
+    private List<MenuInfo> childMenus;
 
 	public MenuInfo(){}
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public Long getPid() {
+	public Integer getPid() {
 		return pid;
 	}
 
-	public void setPid(Long pid) {
+	public void setPid(Integer pid) {
 		this.pid = pid;
 	}
 
@@ -118,14 +119,6 @@ public class MenuInfo implements Serializable {
 		this.name = name;
 	}
 
-	public String getIcon() {
-		return icon;
-	}
-
-	public void setIcon(String icon) {
-		this.icon = icon;
-	}
-
 	public String getUrl() {
 		return url;
 	}
@@ -142,43 +135,43 @@ public class MenuInfo implements Serializable {
 		this.sort = sort;
 	}
 
-	public Boolean getLevel() {
+	public Integer getLevel() {
 		return level;
 	}
 
-	public void setLevel(Boolean level) {
+	public void setLevel(Integer level) {
 		this.level = level;
 	}
 
-	public Boolean getIsChildren() {
+	public Integer getIsChildren() {
 		return isChildren;
 	}
 
-	public void setIsChildren(Boolean isChildren) {
+	public void setIsChildren(Integer isChildren) {
 		this.isChildren = isChildren;
 	}
 
-	public Boolean getMenu() {
+	public Integer getMenu() {
 		return menu;
 	}
 
-	public void setMenu(Boolean menu) {
+	public void setMenu(Integer menu) {
 		this.menu = menu;
 	}
 
-	public Boolean getEnable() {
+	public Integer getEnable() {
 		return enable;
 	}
 
-	public void setEnable(Boolean enable) {
+	public void setEnable(Integer enable) {
 		this.enable = enable;
 	}
 
-	public Boolean getOpen() {
+	public Integer getOpen() {
 		return open;
 	}
 
-	public void setOpen(Boolean open) {
+	public void setOpen(Integer open) {
 		this.open = open;
 	}
 
@@ -206,4 +199,11 @@ public class MenuInfo implements Serializable {
 		this.remark = remark;
 	}
 
+    public List<MenuInfo> getChildMenus() {
+        return childMenus;
+    }
+
+    public void setChildMenus(List<MenuInfo> childMenus) {
+        this.childMenus = childMenus;
+    }
 }

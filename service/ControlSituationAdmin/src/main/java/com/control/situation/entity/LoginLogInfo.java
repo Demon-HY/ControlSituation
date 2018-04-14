@@ -39,7 +39,7 @@ public class LoginLogInfo implements Serializable {
 
 	// 是否执行成功
 	@Column(name = "succeed")
-	private Boolean succeed;
+	private Integer succeed;
 
 	// 具体消息
 	@Column(name = "message")
@@ -84,11 +84,11 @@ public class LoginLogInfo implements Serializable {
 		this.createTime = createTime;
 	}
 
-	public Boolean getSucceed() {
+	public Integer getSucceed() {
 		return succeed;
 	}
 
-	public void setSucceed(Boolean succeed) {
+	public void setSucceed(Integer succeed) {
 		this.succeed = succeed;
 	}
 

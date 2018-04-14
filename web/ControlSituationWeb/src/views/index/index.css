@@ -22,6 +22,10 @@
   margin-right: 20px;
   font-size: 20px;
 }
+/*头部菜单样式*/
+.header-menu {
+  border-bottom-color: #E6E6E6;
+}
 .ei-fullscreen {
   font-size: 45px;
   color: #000;

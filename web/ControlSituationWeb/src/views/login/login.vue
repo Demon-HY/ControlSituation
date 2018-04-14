@@ -18,7 +18,7 @@
           </div>
           <div class="bottom">
             <div class="remember"><input type="checkbox"/><span>Keep me logged in</span></div>
-            <input type="button" value="Login" class="submit-login" @click="login(account, password)"/>
+            <input type="button" value="Login" class="submit-login" @click="toLogin(account, password)"/>
             <div class="clear"></div>
           </div>
         </form>
@@ -41,13 +41,21 @@
       }
     },
     methods: {
-      login
-      // toLogin(account, password) {
-      //   login(account, password)
-      //   .then(res => {
-      //     alert(res);
-      //   });
-      // }
+      // login
+      toLogin(account, password) {
+        login(account, password).then(resp => {
+          if (resp.code !== '200') {
+            this.$message.error(resp.message);
+          }
+
+          // 将 token 写入 localStorage
+          sessionStorage.setItem("token", resp.result.tokenInfo.token);
+          this.$message.success(resp.message);
+
+          let redirect = decodeURIComponent(this.$route.query.redirect || '/index');
+          this.$router.push({path: redirect});
+        })
+      }
     }
   }
 </script>

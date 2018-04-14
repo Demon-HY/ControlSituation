@@ -1,6 +1,7 @@
 // HTTP Axios 请求封装
 import Axios from 'axios'
 import Vue from 'vue';
+import router from '../router/index'
 
 const http = Axios.create({
   // baseURL: process.env.BASE_URL,
@@ -33,18 +34,24 @@ const http = Axios.create({
 http.interceptors.request.use(config => {
     return config;
   }, error => {
+    console.log('请求时的拦截');
     return Promise.reject(error);
   }
 );
 
 // 响应时的拦截
 http.interceptors.response.use(resp => {
-    return resp;
+    // token失效
+    if (resp.data.code === '3000002' || resp.data.code === '3000001') {
+      sessionStorage.removeItem('token');
+      router.replace({path: '/login', query: {redirect: router.currentRoute.fullPath}});
+    } else {
+      return resp.data;
+    }
   },
   error => {
-    // console.log(error);
-    // Vue.prototype.$message.error(error.toString());
-    return Promise.reject(error);
+    console.log('响应时的拦截');
+    return Promise.reject(error.response.data);
   }
 );
 

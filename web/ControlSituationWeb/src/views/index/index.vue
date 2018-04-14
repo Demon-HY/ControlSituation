@@ -6,22 +6,19 @@
         <el-col :span="2" class="logo">
           <span>DEMON</span>
         </el-col>
-        <el-col :span="19">
+        <el-col :span="19" class="header-menu">
           <el-menu
             :default-active="activeIndex"
-            class="el-menu-demo"
+            class="el-menu-header"
             mode="horizontal"
             @select="handleSelect"
             text-color="#000"
             active-text-color="#ffd04b">
-            <!--<el-menu-item v-for="(menu,key) in menus" :index="menu.id" class="first_menu">{{menu.name}}</el-menu-item>-->
-            <template v-for="menu in menus">
+            <template v-for="menu in headerMenus">
               <el-menu-item :index="menu.id + ''" class="first_menu">
                 <router-link :to="menu.url">{{menu.name}}</router-link>
               </el-menu-item>
             </template>
-            <!--<el-menu-item index="1" class="first_menu">首页</el-menu-item>-->
-            <!--<el-menu-item index="2" class="first_menu">订单管理</el-menu-item>-->
           </el-menu>
         </el-col>
         <el-col :span="1">
@@ -36,7 +33,7 @@
             active-text-color="#ffd04b">
             <el-submenu index="1" class="first_menu">
               <template slot="title">Demon-Coffee</template>
-              <el-menu-item index="1-1">退出</el-menu-item>
+              <el-menu-item index="logout">退出</el-menu-item>
             </el-submenu>
           </el-menu>
         </el-col>
@@ -46,9 +43,7 @@
 
     <el-container>
       <!--侧边栏-->
-      <el-aside width="159px">
-        <span style="color: red;">侧边栏</span>
-      </el-aside>
+      <aside-tree></aside-tree>
       <!--侧边栏-->
 
       <!--内容-->
@@ -61,75 +56,27 @@
 </template>
 
 <script>
+  import {logout} from '@/api/user/auth_api'
+  import AsideTree from './aside/AsideTree'
+
   export default {
     name: 'index',
+    components: {AsideTree},
     data() {
       return {
         activeIndex: '1', // 侧边栏当前激活的菜单
         isFull: false,  // 是否全屏展示
-        // 一级菜单
-        menus: [{
-          id: 1,
-          pid: 0,
-          name: '首页',
-          url: '/index',
-          sort: 0,
-          level: 1,
-          is_children: 0,
-          menu: 1,
-          enable: 1,
-          open: 1,
-          create_time: '2018-3-31 18:31:25',
-          update_time: '2018-3-31 18:31:25',
-          childrens: []
-        }, {
-          id: 2,
-          pid: 0,
-          name: '系统管理',
-          url: '/system',
-          sort: 0,
-          level: 1,
-          is_children: 1,
-          menu: 1,
-          enable: 1,
-          open: 1,
-          create_time: '2018-3-31 18:31:25',
-          update_time: '2018-3-31 18:31:25',
-          childrens: [{
-            id: 3,
-            pid: 2,
-            name: '菜单管理',
-            url: '/menu',
-            sort: 1,
-            level: 2,
-            is_children: 1,
-            menu: 1,
-            enable: 1,
-            open: 0,
-            create_time: '2018-3-31 18:31:25',
-            update_time: '2018-3-31 18:31:25',
-            childrens: []
-          }, {
-            id: 4,
-            pid: 2,
-            name: '用户管理',
-            url: '/user',
-            sort: 1,
-            level: 2,
-            is_children: 1,
-            menu: 1,
-            enable: 1,
-            open: 0,
-            create_time: '2018-3-31 18:31:25',
-            update_time: '2018-3-31 18:31:25',
-            childrens: []
-          }]
-        }]
+        // 头部菜单
+        headerMenus: []
       }
     },
     methods: {
       handleSelect(key, keyPath) {
-        console.log(key, keyPath);
+        console.log(key);
+        console.log(keyPath);
+        if (key === 'logout') {
+          logout();
+        }
       },
       // 全屏缩放
       fullScreen: () => {

@@ -17,4 +17,11 @@ public interface RoleDao {
      * @param roleName 角色名
      */
     RoleInfo findByRoleName(String roleName);
+
+    /**
+     * 获取当前用户拥有的所有角色
+     * @param userId 用户 ID
+     * @return 角色集合
+     */
+    List<RoleInfo> findListByUserId(Long userId);
 }

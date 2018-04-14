@@ -21,7 +21,7 @@ public class RoleInfo implements Serializable {
 	// 角色ID
 	@Id
 	@Column(name = "id")
-	private Long id;
+	private Integer id;
 
 	// 角色名称
 	@Column(name = "name")
@@ -46,11 +46,11 @@ public class RoleInfo implements Serializable {
 
 	public RoleInfo(){}
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

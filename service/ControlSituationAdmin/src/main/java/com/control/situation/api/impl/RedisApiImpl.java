@@ -49,26 +49,10 @@ public class RedisApiImpl implements RedisApi,Serializable {
         }
     }
 
-//    @Override
-//    public boolean setBean(final String key, final Object value, long expire) {
-//        setBean(key, value);
-//        return expire(key, expire);
-//    }
-//
-//    @Override
-//    public boolean setBean(final String key, final Object value) {
-//        return redisTemplate.execute((RedisCallback<Boolean>) connection -> {
-//            RedisSerializer<String> serializer = redisTemplate.getStringSerializer();
-//            connection.set(serializer.serialize(key), SerializeUtils.serialize(value));
-//            return true;
-//        });
-//
-//    }
-
     @Override
     public Object getBean(final String key){
         try {
-            return redisTemplate.execute((RedisCallback<Object>) (RedisConnection connection) -> {
+            return redisTemplate.execute((RedisConnection connection) -> {
                 RedisSerializer<String> serializer = redisTemplate.getStringSerializer();
                 byte[] value =  connection.get(serializer.serialize(key));
                 return SerializeUtils.unserialize(value);

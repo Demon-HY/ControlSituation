@@ -17,18 +17,31 @@ Vue.use(Vuex);
 
 Vue.config.productionTip = true;
 
+import {checkLogin} from '@/api/user/auth_api'
+
 // 路由请求拦截
 router.beforeEach((to, from, next) => {
-  //NProgress.start();
-  // if (to.path === '/toLogin') {
-  //   sessionStorage.removeItem('user');
-  // }
-  // let user = JSON.parse(sessionStorage.getItem('user'));
-  // if (!user && to.path !== '/login') {
-  //   next({ path: '/login' })
-  // } else {
-  //   next()
-  // }
+  if (to.path === '/' || to.path === '/login') {
+    // 检查本地的 sessionStorage 是否存在token
+    if (!sessionStorage.getItem('token')) {
+      next();
+    } else {
+      // 调用验证登录接口检查token是否有效
+      checkLogin().then(result => {
+        if (result.code === '3000002' || result.code === '3000001') {
+          sessionStorage.removeItem('token');
+          next();
+        } else {
+          next({path: '/index'});
+        }
+      });
+    }
+  } else {
+    // 检查本地的 sessionStorage 是否存在token
+    if (!sessionStorage.getItem('token')) {
+      next({path: '/login'});
+    }
+  }
 
   next()
 });

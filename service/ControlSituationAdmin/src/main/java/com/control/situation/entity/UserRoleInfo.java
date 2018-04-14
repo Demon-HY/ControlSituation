@@ -21,40 +21,41 @@ public class UserRoleInfo implements Serializable {
 	// 主键
 	@Id
 	@Column(name = "id")
-	private Long id;
+	private Integer id;
 
 	// 用户ID
 	@Column(name = "user_id")
-	private Long userId;
+	private Integer userId;
 
 	// 角色ID
 	@Column(name = "role_id")
-	private Long roleId;
+	private Integer roleId;
 
 
 	public UserRoleInfo(){}
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public Long getUserId() {
+	public Integer getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Long userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 
-	public Long getRoleId() {
+	public Integer getRoleId() {
 		return roleId;
 	}
 
-	public void setRoleId(Long roleId) {
+	public void setRoleId(Integer roleId) {
 		this.roleId = roleId;
 	}
+
 }

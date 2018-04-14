@@ -6,7 +6,7 @@ public class ClientResult implements Serializable {
 
 	private String code = RetCode.OK;
 	// 默认的提示信息
-	private String message;
+	private String message = RetCode.getMsgByStat(code);
 	
 	private Object result;
 

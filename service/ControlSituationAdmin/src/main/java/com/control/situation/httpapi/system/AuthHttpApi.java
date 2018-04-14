@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import static com.control.situation.config.SysContants.COOKIE_EXPIRE;
+
 /**
  * 登录认证
  *
@@ -39,20 +41,19 @@ public class AuthHttpApi {
 	@RequestMapping("/checkLogin.do")
 	public ClientResult checkLogin(HttpServletRequest req) {
 		Env env = (Env) req.getAttribute("env");
-		ClientResult c = env.getCr();
 
 		if (ValidateUtils.isEmpty(env.token)) {
-			return c.setCode(RetCode.ERR_USER_NOT_LOGIN);
+			return env.cr.setCode(RetCode.ERR_USER_NOT_LOGIN);
 		}
 		String userId = redisApi.get(env.token);
 		if (ValidateUtils.isEmpty(userId)) {
-			return c.setCode(RetCode.ERR_TOKEN_EXPIRE);
+			return env.cr.setCode(RetCode.ERR_TOKEN_EXPIRE);
 		}
 
 		// token 刷新有效时间
-		redisApi.expire(env.token, 30 * 60);
+		redisApi.expire(env.token, SysContants.COOKIE_EXPIRE);
 
-		return c.setCode(RetCode.OK);
+		return env.cr.setCode(RetCode.OK);
 	}
 
 	/**
@@ -62,32 +63,33 @@ public class AuthHttpApi {
 	public ClientResult login(HttpServletRequest req, HttpServletResponse resp,
 	                          String account, String password) {
 		Env env = (Env) req.getAttribute("env");
-		ClientResult c = env.getCr();
 
 		if (ValidateUtils.isEmpty(account) || ValidateUtils.isEmpty(password)) {
-			return c.setCode(RetCode.ERR_BAD_PARAMS);
+			return env.cr.setCode(RetCode.ERR_BAD_PARAMS);
 		}
 
-		c = authApi.login(env, account, password);
-		if (!c.getCode().equals(RetCode.OK)) {
-			return c;
-		}
-
-		UserInfo user = (UserInfo) c.getResult();
-		// 创建用户唯一标识
-		String token = RandomUtil.getRequestId();
-		// 写入缓存
-		boolean status = redisApi.set(token, String.valueOf(user.getId()), SysContants.COOKIE_EXPIRE);
-		if (!status) {
-			return c.setCode(RetCode.ERR_WRITE_REDIS_FAILED);
-		}
-		CookieUtils.addCookie(resp, "token", token, SysContants.COOKIE_EXPIRE);
-
-		user.setPassword("");
-		Map<String, Object> result = new LinkedHashMap<>();
-		result.put("token", token);
-		result.put("user", user);
-
-		return c.setResult(result);
+		// 登录
+		return authApi.login(env, account, password);
 	}
+
+    /**
+     * 退出登录
+     */
+    @RequestMapping("/logout.do")
+    public ClientResult logout(HttpServletRequest req) {
+        Env env = (Env) req.getAttribute("env");
+
+        if (ValidateUtils.isEmpty(env.token)) {
+            return env.cr.setCode(RetCode.ERR_USER_NOT_LOGIN);
+        }
+        String userId = redisApi.get(env.token);
+        if (ValidateUtils.isEmpty(userId)) {
+            return env.cr.setCode(RetCode.ERR_TOKEN_EXPIRE);
+        }
+
+        // 清除token
+        authApi.logout(env);
+
+        return env.cr.setCode(RetCode.OK);
+    }
 }

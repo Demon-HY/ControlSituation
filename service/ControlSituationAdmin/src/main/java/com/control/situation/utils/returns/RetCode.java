@@ -5,7 +5,7 @@ package com.control.situation.utils.returns;
  * 200 - 成功
  * 100开头 - 系统级错误
  * 300开头 - 用户/登录
- * 310开头 - 部门
+ * 310开头 - 角色
  * 320开头 - 菜单
  */
 public class RetCode {
@@ -34,6 +34,10 @@ public class RetCode {
 	public static final String ERR_ACCOUNT_EXIST = "3000009";
     /************************************************** 用户/认证-300开头 ***********************************************/
 
+    /************************************************** 角色-310开头 ***********************************************/
+    public static final String ERR_USER_NOT_BIND_ROLE = "3100001";
+    /************************************************** 角色-310开头 ***********************************************/
+
     public static String getMsgByStat(String stat) {
     	switch (stat) {
 		    case OK : return "操作成功";
@@ -54,6 +58,9 @@ public class RetCode {
 		    case ERR_CREATE_USER_FAILED : return "创建用户失败";
 		    case ERR_UPDATE_USER_FAILED : return "更新用户失败";
 		    case ERR_ACCOUNT_EXIST : return "该账号已被使用";
+
+
+		    case ERR_USER_NOT_BIND_ROLE : return "该用户没有绑定角色";
 		    default: return "Stat is not found";
 	    }
     }

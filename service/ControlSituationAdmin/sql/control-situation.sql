@@ -37,7 +37,7 @@ CREATE TABLE `operation_log` (
   `module_name` varchar(16) NOT NULL DEFAULT '' COMMENT '模块名称',
   `operation_data` text NOT NULL COMMENT '操作数据',
   `createtime` datetime NOT NULL COMMENT '创建时间',
-  `succeed` varchar(255) NOT NULL DEFAULT '' COMMENT '是否成功',
+  `succeed` tinyint(1) NOT NULL COMMENT '是否执行成功',
   `remark` varchar(512) NOT NULL DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='操作日志表';
@@ -93,7 +93,7 @@ CREATE TABLE `role_menu` (
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `id` int(4) NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `avatar` varchar(128) NOT NULL DEFAULT '' COMMENT '头像',
   `account` varchar(32) NOT NULL COMMENT '账号',
   `password` varchar(46) NOT NULL COMMENT '密码',
