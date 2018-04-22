@@ -48,11 +48,11 @@ CREATE TABLE `operation_log` (
 DROP TABLE IF EXISTS `menu`;
 CREATE TABLE `menu` (
   `id` int(6) NOT NULL AUTO_INCREMENT COMMENT '菜单ID',
-  `pid` int(6) NOT NULL COMMENT '菜单父编号',
+  `pid` int(6) NOT NULL default 0 COMMENT '菜单父编号',
   `pids` varchar(128) NOT NULL DEFAULT '' COMMENT '当前菜单的所有父菜单编号',
   `name` varchar(32) NOT NULL DEFAULT '' COMMENT '菜单名称',
   `url` varchar(128) NOT NULL DEFAULT '' COMMENT 'url地址',
-  `sort` int(4) NOT NULL COMMENT '菜单排序值',
+  `sort` int(4) NOT NULL COMMENT '菜单排序值,升序排列',
   `level` tinyint(1) NOT NULL COMMENT '菜单层级,(接口和菜单同层)',
   `is_children` tinyint(1) NOT NULL COMMENT '是否有子节点',
   `menu` tinyint(1) NOT NULL COMMENT '是否是菜单：1-是，0-不是(接口路由)',

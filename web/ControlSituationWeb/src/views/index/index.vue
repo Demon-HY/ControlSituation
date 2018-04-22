@@ -47,9 +47,10 @@
       <!--侧边栏-->
 
       <!--内容-->
-      <el-main>
-        <span style="color: red;">正文内容</span>
-      </el-main>
+      <!--<el-main>-->
+        <!--<span style="color: red;">正文内容</span>-->
+      <!--</el-main>-->
+      <layout></layout>
       <!--内容-->
     </el-container>
   </el-container>
@@ -58,10 +59,11 @@
 <script>
   import {logout} from '@/api/user/auth_api'
   import AsideTree from './aside/AsideTree'
+  import Layout from './layout/Layout'
 
   export default {
     name: 'index',
-    components: {AsideTree},
+    components: {AsideTree, Layout},
     data() {
       return {
         activeIndex: '1', // 侧边栏当前激活的菜单

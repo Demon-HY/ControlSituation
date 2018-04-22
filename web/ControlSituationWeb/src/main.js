@@ -46,6 +46,12 @@ router.beforeEach((to, from, next) => {
   next()
 });
 
+// 定义全局过滤器
+Vue.filter('toString', function (value) {
+  if (!value) return '';
+  return value.toString();
+});
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

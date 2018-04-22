@@ -25,7 +25,7 @@ public class TokenInfo implements Serializable {
 	/**
 	 * 用户ID
 	 */
-	public Long uid;
+	public Integer uid;
 
 	/**
 	 * token 创建时间
@@ -47,7 +47,7 @@ public class TokenInfo implements Serializable {
 //	 */
 //	public String device;
 
-	public TokenInfo(Long uid, String clienIP) {
+	public TokenInfo(Integer uid, String clienIP) {
 		this.uid = uid;
 		this.token = String.format("%s@%d", makeToken(), uid);
 		this.createTime = new Date();
