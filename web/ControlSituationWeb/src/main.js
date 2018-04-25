@@ -7,7 +7,7 @@ import Vuex from 'vuex'
 
 import 'element-ui/lib/theme-chalk/index.css'
 
-import store from './store/store'
+import store from './store'
 import '../static/css/main.css'
 import '@/utils/element-init'
 // 引入图标库
@@ -21,27 +21,27 @@ import {checkLogin} from '@/api/user/auth_api'
 
 // 路由请求拦截
 router.beforeEach((to, from, next) => {
-  if (to.path === '/' || to.path === '/login') {
-    // 检查本地的 sessionStorage 是否存在token
-    if (!sessionStorage.getItem('token')) {
-      next();
-    } else {
-      // 调用验证登录接口检查token是否有效
-      checkLogin().then(result => {
-        if (result.code === '3000002' || result.code === '3000001') {
-          sessionStorage.removeItem('token');
-          next();
-        } else {
-          next({path: '/index'});
-        }
-      });
-    }
-  } else {
-    // 检查本地的 sessionStorage 是否存在token
-    if (!sessionStorage.getItem('token')) {
-      next({path: '/login'});
-    }
-  }
+  // if (to.path === '/' || to.path === '/login') {
+  //   // 检查本地的 sessionStorage 是否存在token
+  //   if (!sessionStorage.getItem('token')) {
+  //     next();
+  //   } else {
+  //     // 调用验证登录接口检查token是否有效
+  //     checkLogin().then(result => {
+  //       if (result.code === '3000002' || result.code === '3000001') {
+  //         sessionStorage.removeItem('token');
+  //         next();
+  //       } else {
+  //         next({path: '/index'});
+  //       }
+  //     });
+  //   }
+  // } else {
+  //   // 检查本地的 sessionStorage 是否存在token
+  //   if (!sessionStorage.getItem('token')) {
+  //     next({path: '/login'});
+  //   }
+  // }
 
   next()
 });
@@ -57,6 +57,6 @@ new Vue({
   el: '#app',
   router,
   store,
-  components: { App },
+  components: {App},
   template: '<App/>'
 });

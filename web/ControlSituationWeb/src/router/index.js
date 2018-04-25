@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Login from '@/views/login/login'
-import Index from '@/views/index/index'
+import Index from '../views/index/index'
+
+const _import = require('./_import_' + process.env.NODE_ENV);
 
 Vue.use(Router);
 
@@ -13,11 +14,24 @@ export default new Router({
     redirect: '/login'
   }, {
       path: '/login',
-      name: 'Login',
-      component: Login
+      name: 'index',
+      component: _import('login/login')
   }, {
     path: '/index',
-    name: 'ControlSituationAdmin',
-    component: Index
+    name: 'index',
+    component: Index,
+    children: [{
+      path: 'user',
+      name: 'user',
+      component: _import('index/modules/system/User')
+    }]
+  }, {
+    path: '/system',
+    name: 'system',
+    component: Index,
+    children: [{
+      path: 'user',
+      component: _import('index/modules/system/User')
+    }]
   }]
 })

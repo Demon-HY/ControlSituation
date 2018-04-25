@@ -47,10 +47,9 @@
       <!--侧边栏-->
 
       <!--内容-->
-      <!--<el-main>-->
-        <!--<span style="color: red;">正文内容</span>-->
-      <!--</el-main>-->
-      <layout></layout>
+      <div class="main-container" style="width: 100%;height: auto%;">
+        <router-view/>
+      </div>
       <!--内容-->
     </el-container>
   </el-container>
@@ -59,11 +58,10 @@
 <script>
   import {logout} from '@/api/user/auth_api'
   import AsideTree from './aside/AsideTree'
-  import Layout from './layout/Layout'
 
   export default {
     name: 'index',
-    components: {AsideTree, Layout},
+    components: {AsideTree},
     data() {
       return {
         activeIndex: '1', // 侧边栏当前激活的菜单
@@ -80,6 +78,34 @@
           logout();
         }
       },
+
+      addTab(targetName) {
+        let newTabName = ++this.tabIndex + '';
+        this.editableTabs2.push({
+          title: 'New Tab',
+          name: newTabName,
+          content: 'New Tab content'
+        });
+        this.editableTabsValue2 = newTabName;
+      },
+      removeTab(targetName) {
+        let tabs = this.editableTabs2;
+        let activeName = this.editableTabsValue2;
+        if (activeName === targetName) {
+          tabs.forEach((tab, index) => {
+            if (tab.name === targetName) {
+              let nextTab = tabs[index + 1] || tabs[index - 1];
+              if (nextTab) {
+                activeName = nextTab.name;
+              }
+            }
+          });
+        }
+
+        this.editableTabsValue2 = activeName;
+        this.editableTabs2 = tabs.filter(tab => tab.name !== targetName);
+      },
+
       // 全屏缩放
       fullScreen: () => {
         // 退出全屏
